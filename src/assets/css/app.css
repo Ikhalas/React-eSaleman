@@ -3,7 +3,13 @@
   src: url("../font/Prompt-Regular.ttf");
 }
 
-
 .regular-th {
-  font-family: 'Prompt','Prompt';
+  font-family: "Prompt", "Prompt";
 }
+
+.tooltip.show {
+  opacity: 1;
+  box-shadow: 1px 1px 3px #d9d9d9;
+}
+
+
