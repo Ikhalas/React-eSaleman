@@ -3,8 +3,11 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Header from "../components/main/Header";
 import Home from "../views/home/Home";
-import Detail from "../views/product/Detail"
+import Product from "../views/product/Product"
+import ProductDetail from "../views/product/ProductDetail"
+import AddNewShop from "../views/newShop/AddNewShop"
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "../assets/css/app.css";
 
 export default class Main extends Component {
@@ -12,7 +15,10 @@ export default class Main extends Component {
     return (
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/detail/:id" component={Detail} />
+        <Route exact path="/product" component={Product} />
+        <Route exact path="/productdetail/:id" component={ProductDetail} />
+
+        <Route exact path="/newshop" component={AddNewShop} />
       </Switch>
     );
   }

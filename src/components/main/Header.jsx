@@ -6,7 +6,6 @@ import {
   Nav,
   NavItem,
   NavbarText,
-  Tooltip,
   InputGroup,
   InputGroupAddon,
   InputGroupText,
@@ -14,7 +13,6 @@ import {
 } from "reactstrap";
 
 import logo from "../../assets/images/logo_1.png";
-import empty_busket from "../../assets/images/empty_busket.png";
 
 export default class Header extends Component {
   constructor(props) {
@@ -26,8 +24,7 @@ export default class Header extends Component {
       join_text: false,
       about_icon: "far fa-address-card",
       about_text: false,
-      busket_text: false,
-      busket_tooltip: false,
+      login_text: false,
     };
   }
 
@@ -73,17 +70,15 @@ export default class Header extends Component {
     });
   };
 
-  basketOnMouseEnter = () => {
+  loginOnMouseEnter = () => {
     this.setState({
-      busket_tooltip: !this.state.busket_tooltip,
-      busket_text: true,
+      login_text: true,
     });
   };
 
-  basketOnMouseLeave = () => {
+  loginOnMouseLeave = () => {
     this.setState({
-      //about_icon: "far fa-address-card",
-      busket_text: false,
+      login_text: false,
     });
   };
 
@@ -95,8 +90,7 @@ export default class Header extends Component {
       join_text,
       about_icon,
       about_text,
-      busket_text,
-      busket_tooltip,
+      login_text,
     } = this.state;
     return (
       <div className="regular-th">
@@ -138,6 +132,36 @@ export default class Header extends Component {
                 >
                   <Link
                     to="/"
+                    onMouseEnter={this.aboutOnMouseEnter}
+                    onMouseLeave={this.aboutOnMouseLeave}
+                  >
+                    <i
+                      className={about_icon}
+                      style={{ fontSize: "40px", color: "#d93731" }}
+                    />
+                    <p
+                      style={
+                        about_text
+                          ? {
+                              fontSize: "13px",
+                              color: "#d93731",
+                              textDecoration: "underline",
+                              textDecorationColor: "#d93731",
+                            }
+                          : { fontSize: "13px", color: "#000000" }
+                      }
+                    >
+                      โปรไฟล์
+                    </p>
+                  </Link>
+                </NavItem>
+
+                <NavItem
+                  className="pt-4"
+                  style={{ textAlign: "center", width: "120px" }}
+                >
+                  <Link
+                    to="/product"
                     onMouseEnter={this.listOnMouseEnter}
                     onMouseLeave={this.listOnMouseLeave}
                   >
@@ -157,7 +181,7 @@ export default class Header extends Component {
                           : { fontSize: "13px", color: "#000000" }
                       }
                     >
-                      สินค้าแนะนำ
+                      รายการสินค้า
                     </p>
                   </Link>
                 </NavItem>
@@ -167,7 +191,7 @@ export default class Header extends Component {
                   style={{ textAlign: "center", width: "120px" }}
                 >
                   <Link
-                    to="/"
+                    to="newshop"
                     onMouseEnter={this.joinOnMouseEnter}
                     onMouseLeave={this.joinOnMouseLeave}
                   >
@@ -198,16 +222,16 @@ export default class Header extends Component {
                 >
                   <Link
                     to="/"
-                    onMouseEnter={this.aboutOnMouseEnter}
-                    onMouseLeave={this.aboutOnMouseLeave}
+                    onMouseEnter={this.loginOnMouseEnter}
+                    onMouseLeave={this.loginOnMouseLeave}
                   >
                     <i
-                      className={about_icon}
+                      className="fas fa-sign-in-alt"
                       style={{ fontSize: "40px", color: "#d93731" }}
                     />
                     <p
                       style={
-                        about_text
+                        login_text
                           ? {
                               fontSize: "13px",
                               color: "#d93731",
@@ -217,63 +241,9 @@ export default class Header extends Component {
                           : { fontSize: "13px", color: "#000000" }
                       }
                     >
-                      เกี่ยวกับเรา
+                      เข้าสู่ระบบ
                     </p>
                   </Link>
-                </NavItem>
-
-                <NavItem
-                  className="pt-4"
-                  style={{ textAlign: "center", width: "120px" }}
-                  id="busketTooltip"
-                >
-                  <span
-                    onMouseEnter={this.basketOnMouseEnter}
-                    onMouseLeave={this.basketOnMouseLeave}
-                    style={{cursor: "pointer"}}
-                  >
-                    <i
-                      className="fas fa-shopping-basket"
-                      style={{ fontSize: "40px", color: "#d93731" }}
-                    />
-                    <p
-                      style={
-                        busket_text
-                          ? {
-                              fontSize: "13px",
-                              color: "#d93731",
-                              textDecoration: "underline",
-                              textDecorationColor: "#d93731",
-                            }
-                          : { fontSize: "13px", color: "#000000" }
-                      }
-                    >
-                      ตะกร้า{" "}
-                      <i
-                        className="fas fa-sort-down"
-                        style={{ fontSize: "15px" }}
-                      ></i>
-                    </p>
-                  </span>
-
-                  <Tooltip
-                    placement="bottom"
-                    isOpen={busket_tooltip}
-                    target="busketTooltip"
-                    toggle={this.basketOnMouseEnter}
-                    style={{
-                      width: "600px",
-                      height: "200px",
-                      backgroundColor: "rgba(255, 255, 255, 1)",
-                      color: "#000000",
-                      //opacity: "1 !importent"
-                    }}
-                  >
-                    <div style={{ margin: "auto" }}>
-                      <img src={empty_busket} alt="empty_busket" width="80%" />
-                      <p>ยังไม่มีสินค้าที่อยากขายในตะกร้า</p>
-                    </div>
-                  </Tooltip>
                 </NavItem>
               </Nav>
             </NavbarText>
@@ -293,7 +263,10 @@ export default class Header extends Component {
             </Nav>
             <NavbarText style={{ width: "600px" }}>
               <InputGroup>
-                <Input placeholder="ค้นหาสินค้าที่คุณต้องการ" style={{ fontSize: "13px" }} />
+                <Input
+                  placeholder="ค้นหาสินค้าที่คุณต้องการ"
+                  style={{ fontSize: "13px" }}
+                />
                 <InputGroupAddon addonType="append">
                   <InputGroupText style={{ backgroundColor: "#fff" }}>
                     <i

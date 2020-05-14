@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 
-import Suggestion from './components/Suggestion'
-import Promotion from './components/Promotion'
-import Category from './components/Category'
-import ProductList from './components/ProductList'
+import UserProfile from './components/UserProfile'
+
+
+import UserProduct from './components/UserProduct'
 
 
 export default class Home extends Component {
@@ -27,12 +27,9 @@ export default class Home extends Component {
         className="regular-th"
         style={{ backgroundColor: "#f5f5f5" }}
       >
-        <Suggestion />
-        <Promotion />
+        <UserProfile />
         <br />
-        <Category />
-        <br />
-        <ProductList />
+        <UserProduct />
       </div>
     );
   }
