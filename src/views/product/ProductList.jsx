@@ -32,7 +32,7 @@ class ProductList extends Component {
 
   getProduct() {
     axios.get(process.env.REACT_APP_API_URL + "/product/all").then((res) => {
-      console.log(res.data);
+      //console.log(res.data);
       this._isMounted &&
         this.setState({
           products: res.data,
@@ -84,7 +84,7 @@ class ProductList extends Component {
 
   render() {
     return (
-      <div>
+      <div  style={{ backgroundColor: "#f5f5f5" }}>
         <Container>
           <Row>{this.genProducts()}</Row>
         </Container>
