@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 
-import UserProfile from './components/UserProfile'
-
-
-import UserProduct from './components/UserProduct'
-
+import UserProfile from "./components/UserProfile";
+import UserProduct from "./components/UserProduct";
 
 export default class Home extends Component {
   constructor(props) {
@@ -14,7 +11,6 @@ export default class Home extends Component {
 
   componentDidMount() {
     this._isMounted = true;
-    
   }
 
   componentWillUnmount() {
@@ -23,14 +19,13 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div
-        className="regular-th"
-        style={{ backgroundColor: "#f5f5f5" }}
-      >
-        <UserProfile />
-        <br />
-        <UserProduct />
-      </div>
+      <>
+        <div className="regular-th" style={{ backgroundColor: "#f5f5f5" }}>
+          <UserProfile />
+          <br />
+          <UserProduct />
+        </div>
+      </>
     );
   }
 }

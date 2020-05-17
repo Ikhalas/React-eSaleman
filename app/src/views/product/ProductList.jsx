@@ -19,7 +19,7 @@ class ProductList extends Component {
     };
 
     this._isMounted = false;
-    this._selectedShop = this.props.shop.label
+    this._selectedShop = this.props.shop.label;
   }
 
   componentDidMount() {
@@ -41,8 +41,10 @@ class ProductList extends Component {
     });
   }
 
-  goToDetail = (product_id) =>  {
-    this.props.history.push("/productdetail/" + this._selectedShop + "/" + product_id);
+  goToDetail = (product_id) => {
+    this.props.history.push(
+      "/productdetail/" + this._selectedShop + "/" + product_id
+    );
   };
 
   genProducts = () => {
@@ -51,10 +53,9 @@ class ProductList extends Component {
       products &&
       products.map((product) => {
         return (
-          <Col md="3">
+          <Col md="3" key={product.product_id}>
             <Card
               className="mb-3"
-              key={product.product_id}
               onClick={() => this.goToDetail(product.product_id)}
             >
               <div
@@ -84,8 +85,9 @@ class ProductList extends Component {
   };
 
   render() {
+    
     return (
-      <div  style={{ backgroundColor: "#f5f5f5" }}>
+      <div style={{ backgroundColor: "#f5f5f5" }}>
         <Container>
           <Row>{this.genProducts()}</Row>
         </Container>
@@ -94,4 +96,4 @@ class ProductList extends Component {
   }
 }
 
-export default withRouter(ProductList)
+export default withRouter(ProductList);
