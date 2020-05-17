@@ -1,0 +1,27 @@
+#ln-share-button {
+    background: #00c300;
+    border-radius: 3px;
+    font-weight: 600;
+    padding: 5px 8px;
+    display: inline-block;
+    position: static;
+}
+
+#ln-share-button:hover {
+    cursor: pointer;
+    background: #00ad00
+}
+
+#ln-share-button svg {
+    width: 24px;
+    fill: white;
+    vertical-align: middle;
+    border-radius: 2px
+}
+
+#ln-share-button span {
+    vertical-align: middle;
+    color: white;
+    font-size: 14px;
+    padding: 0 3px
+}
