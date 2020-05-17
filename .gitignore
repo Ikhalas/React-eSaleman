@@ -3,7 +3,8 @@
 # dependencies
 
 # ignore all folder name node_modules
-node_modules/   
+node_modules/  
+src/assets/api/firebase.js
 
 /.pnp
 .pnp.js

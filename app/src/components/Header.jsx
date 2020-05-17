@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../assets/api/firebase";
 import {
   Container,
   Navbar,
@@ -10,14 +11,7 @@ import {
   InputGroupAddon,
   InputGroupText,
   Input,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
 } from "reactstrap";
-
-import logo from "../../assets/images/logo_1.png";
 
 export default class Header extends Component {
   constructor(props) {
@@ -30,12 +24,28 @@ export default class Header extends Component {
       about_icon: "far fa-address-card",
       about_text: false,
       login_text: false,
-      loginModal: false,
+      currentUser: null,
     };
+    this._isMounted = false;
   }
 
   componentDidMount() {
-    //console.log('componentDidMount')
+    this._isMounted = true;
+    this._isMounted && this.getUser();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  getUser() {
+    auth.onAuthStateChanged((user) => {
+      user
+        ? this._isMounted && this.setState({ currentUser: user })
+        : this._isMounted && this.setState({ currentUser: null })
+    });
+
+    
   }
 
   listOnMouseEnter = () => {
@@ -49,20 +59,6 @@ export default class Header extends Component {
     this.setState({
       list_icon: "far fa-list-alt",
       list_text: false,
-    });
-  };
-
-  joinOnMouseEnter = () => {
-    this.setState({
-      join_icon: "fas fa-handshake",
-      join_text: true,
-    });
-  };
-
-  joinOnMouseLeave = () => {
-    this.setState({
-      join_icon: "far fa-handshake",
-      join_text: false,
     });
   };
 
@@ -92,21 +88,18 @@ export default class Header extends Component {
     });
   };
 
-  toggleLoginModal = () => {
-    this.setState({ loginModal: !this.state.loginModal });
-  };
-
   render() {
+    
     const {
       list_icon,
       list_text,
-      join_icon,
-      join_text,
       about_icon,
       about_text,
       login_text,
+      currentUser
     } = this.state;
-    return (
+    
+    return currentUser ? (
       <div className="regular-th">
         <Navbar
           light
@@ -121,11 +114,11 @@ export default class Header extends Component {
             <Nav className="mr-auto" navbar></Nav>
             <NavbarText>
               <Link to="/" style={{ fontSize: "12px" }}>
-                Register
+                {currentUser.email}
               </Link>
               &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
               <Link to="/" style={{ fontSize: "12px" }}>
-                Login
+                User ID : {currentUser.uid}
               </Link>
             </NavbarText>
           </Container>
@@ -135,7 +128,11 @@ export default class Header extends Component {
           <Container>
             <Nav className="mr-auto" navbar>
               <Link to="/">
-                <img src={logo} alt="logo" width="65%" />
+                <img
+                  src={require("../assets/images/logo_1.png")}
+                  alt="logo"
+                  width="65%"
+                />
               </Link>
             </Nav>
             <NavbarText>
@@ -204,43 +201,14 @@ export default class Header extends Component {
                   className="pt-4"
                   style={{ textAlign: "center", width: "120px" }}
                 >
-                  <Link
-                    to="newshop"
-                    onMouseEnter={this.joinOnMouseEnter}
-                    onMouseLeave={this.joinOnMouseLeave}
-                  >
-                    <i
-                      className={join_icon}
-                      style={{ fontSize: "40px", color: "#d93731" }}
-                    />
-                    <p
-                      style={
-                        join_text
-                          ? {
-                              fontSize: "13px",
-                              color: "#d93731",
-                              textDecoration: "underline",
-                              textDecorationColor: "#d93731",
-                            }
-                          : { fontSize: "13px", color: "#000000" }
-                      }
-                    >
-                      ขายสินค้ากับ <br /> e-Salesman
-                    </p>
-                  </Link>
-                </NavItem>
-
-                <NavItem
-                  className="pt-4"
-                  style={{ textAlign: "center", width: "120px" }}
-                >
-                  <Link
-                    onClick={this.toggleLoginModal}
+                  <a
+                    style={{ cursor: "pointer" }}
+                    onClick={() => auth.signOut()}
                     onMouseEnter={this.loginOnMouseEnter}
                     onMouseLeave={this.loginOnMouseLeave}
                   >
                     <i
-                      className="fas fa-sign-in-alt"
+                      className="fas fa-sign-out-alt"
                       style={{ fontSize: "40px", color: "#d93731" }}
                     />
                     <p
@@ -255,9 +223,9 @@ export default class Header extends Component {
                           : { fontSize: "13px", color: "#000000" }
                       }
                     >
-                      เข้าสู่ระบบ
+                      ออกจากระบบ
                     </p>
-                  </Link>
+                  </a>
                 </NavItem>
               </Nav>
             </NavbarText>
@@ -293,34 +261,7 @@ export default class Header extends Component {
             </NavbarText>
           </Container>
         </Navbar>
-
-        <Modal
-          isOpen={this.state.loginModal}
-          toggle={this.toggleLoginModal}
-         
-          backdrop={true}
-          keyboard={true}
-        >
-          <ModalHeader toggle={this.toggleLoginModal}>Modal title</ModalHeader>
-          <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.toggleLoginModal}>
-              Do Something
-            </Button>{" "}
-            <Button color="secondary" onClick={this.toggleLoginModal}>
-              Cancel
-            </Button>
-          </ModalFooter>
-        </Modal>
       </div>
-    );
+    ) : (<></>)
   }
 }

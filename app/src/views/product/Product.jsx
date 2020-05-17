@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import Select from "react-select";
 //import axios from "axios";
 import { Container } from "reactstrap";
@@ -40,6 +39,8 @@ export default class Detail extends Component {
   render() {
     const { selectedShop } = this.state;
     return (
+      <>
+ 
       <div
         className="regular-th"
         style={{ backgroundColor: "#f5f5f5", height: "1500px" }}
@@ -50,17 +51,20 @@ export default class Detail extends Component {
 
             <h5>เลือกร้านที่คุณต้องการ.....</h5>
 
+       
             <Select
               value={selectedShop}
               onChange={this.handleShopChange}
               options={options}
             />
+            
           </Container>
           <hr />
 
           {selectedShop && <ProductList shop={selectedShop} />}
         </div>
       </div>
+      </>
     );
   }
 }

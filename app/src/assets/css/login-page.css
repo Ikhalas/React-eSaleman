@@ -1,0 +1,39 @@
+/* ------------------ modal border-radius ------------------ */
+
+.modal-content {
+  -webkit-border-radius: 30px !important;
+  -moz-border-radius: 30px !important;
+  border-radius: 30px !important;
+}
+
+/* ------------------------------------------------------- */
+
+/* ----------------- modal middle screen ----------------- */
+
+.modal:before {
+  display: inline-block;
+  vertical-align: middle;
+  content: " ";
+  height: 90%;
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.modal {
+  text-align: center;
+}
+
+/* ------------------------------------------------------- */
+
+
+.login-btn {
+  background-color: #d93731 !important;
+}
+
+.login-btn:hover {
+  background-color: #c2342e !important;
+}
