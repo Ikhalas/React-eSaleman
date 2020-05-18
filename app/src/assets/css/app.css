@@ -32,6 +32,23 @@
   transform: translateY(-3px) scale(1);
 }
 
+.button-like-a {
+  background: none!important;
+  border: none;
+  cursor: pointer;
+  outline-color: transparent;
+  outline: none;
+}
+
+.button-like-a:hover{
+  background: none!important;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  outline-color: transparent;
+  outline: none;
+}
+
 
 
 

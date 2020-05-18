@@ -3,15 +3,12 @@ import { auth } from "../../assets/api/firebase";
 import {
   Row,
   Col,
-  CardBody,
   Input,
   InputGroup,
   Button,
   Form,
 } from "reactstrap";
 
-import { ReactComponent as FacebookSVG } from "../../assets/icon/facebook.svg";
-import { ReactComponent as GoogleSVG } from "../../assets/icon/google.svg";
 
 import "../../assets/css/login-page.css";
 import "../../assets/css/facebook-login.css";
@@ -58,26 +55,7 @@ export default class Register extends Component {
     const { wrongPassword, email, password, confirmpassword } = this.state;
     return (
       <>
-        <div>
-          <div
-            style={{
-              height: "650px",
-              backgroundColor: "#d93731",
-            }}
-          >
-            <Row>
-              <Col md="6"></Col>
-              <Col md="6">
-                <div
-                  className="py-3"
-                  style={{
-                    width: "500px",
-                    marginTop: "60px",
-                    backgroundColor: "#ffffff",
-                    borderRadius: "30px",
-                  }}
-                >
-                  <CardBody>
+        
                     <Row className="mt-1">
                       <Col md="5">
                         <h4>สมัครใหม่</h4>
@@ -88,13 +66,13 @@ export default class Register extends Component {
                         className="text-right mt-2"
                       >
                         หากมีบัญชีผู้ใช้แล้ว คุณสามารถ{" "}
-                        <a
+                        <button
                           style={{ cursor: "pointer" }}
-                          className="text-danger"
+                          className="text-danger button-like-a"
                           onClick={this.props.togglePage}
                         >
                           เข้าสู่ระบบ
-                        </a>
+                        </button>
                       </Col>
                     </Row>
 
@@ -160,56 +138,8 @@ export default class Register extends Component {
                     </Form>
                     <br />
 
-                    <Row>
-                      <Col md="5">
-                        <hr />
-                      </Col>
-                      <Col
-                        md="2"
-                        style={{ textAlign: "center", color: "gray" }}
-                      >
-                        หรือ
-                      </Col>
-                      <Col md="5">
-                        <hr />
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md="6">
-                        <div
-                          id="fb-login-share-button"
-                          className="text-center"
-                          style={{ width: "100%" }}
-                        >
-                          <FacebookSVG />
-                          <span style={{ fontSize: "15px" }}>
-                            {" "}
-                            Sign up with Facebook
-                          </span>
-                        </div>
-                      </Col>
-                      <Col md="6">
-                        <div
-                          id="gg-login-share-button"
-                          className="text-center"
-                          style={{
-                            border: "1px solid #d9d9d9",
-                            boxShadow: "2px 2px 3px #d9d9d9",
-                            width: "100%",
-                          }}
-                        >
-                          <GoogleSVG />
-                          &nbsp;
-                          <span> Sign up with Google</span>
-                        </div>
-                      </Col>
-                    </Row>
-                  </CardBody>
-                </div>
-              </Col>
-            </Row>
-          </div>
-        </div>
+                   
+          
       </>
     );
   }

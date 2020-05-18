@@ -5,8 +5,9 @@ var app = express();
 app.set('port', (process.env.PORT || 5000))
 app.use(cors())
 
-const users_router = require('./routes/users.js')
-
+const product_router = require('./routes/product.js')
+const order_router = require('./routes/order.js')
+const cate_router = require('./routes/category.js')
 
 
 app.get("/", (req, res) => {
@@ -14,8 +15,9 @@ app.get("/", (req, res) => {
   res.send('root')
 })
 
-app.use('/users', users_router)
-
+app.use('/product', product_router)
+app.use('/order', order_router)
+app.use('/category', cate_router)
 
 
 /*

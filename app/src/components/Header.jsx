@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { auth } from "../assets/api/firebase";
 import {
@@ -25,6 +26,7 @@ export default class Header extends Component {
       about_text: false,
       login_text: false,
       currentUser: null,
+      userDetail: "",
     };
     this._isMounted = false;
   }
@@ -41,11 +43,24 @@ export default class Header extends Component {
   getUser() {
     auth.onAuthStateChanged((user) => {
       user
-        ? this._isMounted && this.setState({ currentUser: user })
-        : this._isMounted && this.setState({ currentUser: null })
+        ? this._isMounted &&
+          this.setState({ currentUser: user }, () => this.getUserDetail())
+        : this._isMounted && this.setState({ currentUser: null });
     });
+  }
 
-    
+  getUserDetail() {
+    const { currentUser } = this.state;
+    axios
+      .get(process.env.REACT_APP_API_URL + "/users/" + currentUser.uid)
+      .then((res) => {
+        //console.log(res.data);
+        this._isMounted &&
+          this.setState({
+            userDetail: res.data,
+          });
+      })
+      .catch((err) => console.log(err));
   }
 
   listOnMouseEnter = () => {
@@ -89,17 +104,16 @@ export default class Header extends Component {
   };
 
   render() {
-    
     const {
       list_icon,
       list_text,
       about_icon,
       about_text,
       login_text,
-      currentUser
+      userDetail,
     } = this.state;
-    
-    return currentUser ? (
+
+    return userDetail ? (
       <div className="regular-th">
         <Navbar
           light
@@ -111,15 +125,26 @@ export default class Header extends Component {
           }}
         >
           <Container>
-            <Nav className="mr-auto" navbar></Nav>
+            <Nav className="mr-auto" navbar>
+              <Link to="/newshop" style={{ fontSize: "13px" }} className="text-danger">
+                ขายของกับ e-Salesman
+              </Link>
+            </Nav>
             <NavbarText>
-              <Link to="/" style={{ fontSize: "12px" }}>
-                {currentUser.email}
-              </Link>
-              &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-              <Link to="/" style={{ fontSize: "12px" }}>
-                User ID : {currentUser.uid}
-              </Link>
+              {userDetail.user_name && userDetail.user_surname ? (
+                <>
+                  <Link to="/" className="pr-5" style={{ fontSize: "15px" }}>
+                    {userDetail.user_name}&nbsp;&nbsp;{userDetail.user_surname}
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/" style={{ fontSize: "12px" }}>
+                    ยังไม่ได้ตั้งชื่อ{" "}
+                    <span className="text-danger">แก้ไขโปรไฟล์</span>
+                  </Link>
+                </>
+              )}
             </NavbarText>
           </Container>
         </Navbar>
@@ -201,7 +226,8 @@ export default class Header extends Component {
                   className="pt-4"
                   style={{ textAlign: "center", width: "120px" }}
                 >
-                  <a
+                  <button
+                    className="button-like-a"
                     style={{ cursor: "pointer" }}
                     onClick={() => auth.signOut()}
                     onMouseEnter={this.loginOnMouseEnter}
@@ -225,7 +251,7 @@ export default class Header extends Component {
                     >
                       ออกจากระบบ
                     </p>
-                  </a>
+                  </button>
                 </NavItem>
               </Nav>
             </NavbarText>
@@ -262,6 +288,8 @@ export default class Header extends Component {
           </Container>
         </Navbar>
       </div>
-    ) : (<></>)
+    ) : (
+      <></>
+    );
   }
 }
