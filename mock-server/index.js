@@ -2,7 +2,7 @@ const express = require("express");
 var cors = require('cors')
 var app = express();
 
-app.set('port', (process.env.PORT || 5000))
+app.set('port', (process.env.PORT || 5001))
 app.use(cors())
 
 const product_router = require('./routes/product.js')

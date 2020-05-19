@@ -25,6 +25,7 @@ class ProductList extends Component {
   componentDidMount() {
     this._isMounted = true;
     this._isMounted && this.getProduct();
+   
   }
 
   componentWillUnmount() {
@@ -32,12 +33,14 @@ class ProductList extends Component {
   }
 
   getProduct() {
-    axios.get(process.env.REACT_APP_API_URL + "/product/all").then((res) => {
+    axios.get("http://localhost:5001/product/all").then((res) => { //mock data
       //console.log(res.data);
       this._isMounted &&
         this.setState({
           products: res.data,
         });
+    }).catch((error) => {
+      console.log(error);
     });
   }
 

@@ -6,7 +6,7 @@ app.set('port', (process.env.PORT || 5000))
 app.use(cors())
 
 const users_router = require('./routes/users.js')
-
+const shop_router = require('./routes/shop.js')
 
 
 app.get("/", (req, res) => {
@@ -15,6 +15,7 @@ app.get("/", (req, res) => {
 })
 
 app.use('/users', users_router)
+app.use('/shop', shop_router)
 
 
 

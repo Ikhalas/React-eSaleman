@@ -177,6 +177,7 @@ export default class Header extends Component {
                       }
                       width="20px"
                       style={{ borderRadius: "50%" }}
+                      alt="avatar"
                     />
                     &nbsp;&nbsp;
                     {userDetail.user_name}

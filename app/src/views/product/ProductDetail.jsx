@@ -43,7 +43,7 @@ export default class ProductDetail extends Component {
 
   getProduct() {
     axios
-      .get(process.env.REACT_APP_API_URL + "/product/" + this._productId)
+      .get("http://localhost:5001/product/" + this._productId)
       .then((res) => {
         //console.log(res.data);
         this._isMounted &&
@@ -58,7 +58,7 @@ export default class ProductDetail extends Component {
     const { product } = this.state;
     //console.log(product);
     axios
-      .get(process.env.REACT_APP_API_URL + "/category/" + product.category_id)
+      .get("http://localhost:5001/category/" + product.category_id)
       .then((res) => {
         //console.log(res.data);
         this._isMounted &&
