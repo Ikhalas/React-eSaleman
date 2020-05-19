@@ -11,8 +11,6 @@ import {
 } from "reactstrap";
 
 import "../../assets/css/login-page.css";
-import "../../assets/css/facebook-login.css";
-import "../../assets/css/google-login.css";
 
 export default class Login extends Component {
   constructor(props) {
@@ -36,7 +34,7 @@ export default class Login extends Component {
     e.preventDefault();
     this.setState({
       [e.target.name]: e.target.value,
-      message: "",
+      message: ""
     });
   };
 

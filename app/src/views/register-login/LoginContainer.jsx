@@ -10,8 +10,7 @@ import {
   CardBody,
 } from "reactstrap";
 
-
-import { fire,auth } from "../../assets/api/firebase";
+import firebase from 'firebase/app';
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 import Login from "./Login";
@@ -23,42 +22,28 @@ export default class LoginContainer extends Component {
     super(props);
     this.state = {
       page: true, //true = Login : false = Register
-      isSignedIn: false
     };
     this._isMounted = false;
   }
-
-  componentDidMount() {
-    this.unregisterAuthObserver = auth.onAuthStateChanged(
-        (user) => this.setState({isSignedIn: !!user})
-    );
-  }
-
-   // Make sure we un-register Firebase observers when the component unmounts.
-   componentWillUnmount() {
-    this.unregisterAuthObserver();
-  }
-
-  
-
-  togglePage = () => {
-    this.setState({
-      page: !this.state.page,
-    });
-  };
 
   // Configure FirebaseUI.
   uiConfig = {
     // Popup signin flow rather than redirect flow.
     signInFlow: "popup",
     signInOptions: [
-      fire.auth.FacebookAuthProvider.PROVIDER_ID,
-      fire.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     ],
     callbacks: {
       // Avoid redirects after sign-in.
-      signInSuccessWithAuthResult : () => false,
+      signInSuccessWithAuthResult: () => false
     },
+  };
+
+  togglePage = () => {
+    this.setState({
+      page: !this.state.page,
+    });
   };
 
   render() {
@@ -121,7 +106,7 @@ export default class LoginContainer extends Component {
                   <div style={{ width: "100%" }}>
                     <StyledFirebaseAuth
                       uiConfig={this.uiConfig}
-                      firebaseAuth={auth}
+                      firebaseAuth={firebase.auth()}
                     />
                   </div>
                 </CardBody>

@@ -35,6 +35,7 @@ export default class App extends Component {
     const { currentUser, readyForRender } = this.state;
     return readyForRender ? (
       <div>{currentUser ? <Main /> : <LoginContainer />}</div>
+     
     ) : (
       <></>
     );

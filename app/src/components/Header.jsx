@@ -40,11 +40,40 @@ export default class Header extends Component {
     this._isMounted = false;
   }
 
+  isFirstTimeLogin() {
+    const { currentUser, userDetail } = this.state;
+
+    if (currentUser.providerData[0].providerId !== "password" && !userDetail) {
+      console.log(
+        "log in with " +
+          currentUser.providerData[0].providerId +
+          " and this is my first time"
+      );
+
+      axios
+        .post(process.env.REACT_APP_API_URL + "/users/add_new_user", {
+          user_id: currentUser.uid,
+          user_email: currentUser.email,
+          user_name: currentUser.displayName,
+          user_photo: currentUser.photoURL,
+        })
+        .then(() => {
+          this._isMounted && this.me();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
+
   getUser() {
     auth.onAuthStateChanged((user) => {
       user
         ? this._isMounted &&
-          this.setState({ currentUser: user }, () => this.getUserDetail())
+          this.setState({ currentUser: user }, () => {
+            //console.log(this.state.currentUser.uid)
+            this.getUserDetail();
+          })
         : this._isMounted && this.setState({ currentUser: null });
     });
   }
@@ -54,11 +83,13 @@ export default class Header extends Component {
     axios
       .get(process.env.REACT_APP_API_URL + "/users/" + currentUser.uid)
       .then((res) => {
-        //console.log(res.data);
         this._isMounted &&
-          this.setState({
-            userDetail: res.data,
-          });
+          this.setState(
+            {
+              userDetail: res.data,
+            },
+            () => this.isFirstTimeLogin()
+          );
       })
       .catch((err) => console.log(err));
   }
@@ -113,7 +144,7 @@ export default class Header extends Component {
       userDetail,
     } = this.state;
 
-    return userDetail ? (
+    return (
       <div className="regular-th">
         <Navbar
           light
@@ -126,20 +157,34 @@ export default class Header extends Component {
         >
           <Container>
             <Nav className="mr-auto" navbar>
-              <Link to="/newshop" style={{ fontSize: "13px" }} className="text-danger">
+              <Link
+                to="/newshop"
+                style={{ fontSize: "13px" }}
+                className="text-danger"
+              >
                 ขายของกับ e-Salesman
               </Link>
             </Nav>
             <NavbarText>
-              {userDetail.user_name && userDetail.user_surname ? (
+              {userDetail.user_name && userDetail.user_photo ? (
                 <>
                   <Link to="/" className="pr-5" style={{ fontSize: "15px" }}>
-                    {userDetail.user_name}&nbsp;&nbsp;{userDetail.user_surname}
+                    <img
+                      src={
+                        userDetail.user_photo
+                          ? userDetail.user_photo
+                          : require("../assets/images/user.png")
+                      }
+                      width="20px"
+                      style={{ borderRadius: "50%" }}
+                    />
+                    &nbsp;&nbsp;
+                    {userDetail.user_name}
                   </Link>
                 </>
               ) : (
                 <>
-                  <Link to="/" style={{ fontSize: "12px" }}>
+                  <Link to="/" className="pr-5" style={{ fontSize: "12px" }}>
                     ยังไม่ได้ตั้งชื่อ{" "}
                     <span className="text-danger">แก้ไขโปรไฟล์</span>
                   </Link>
@@ -288,8 +333,6 @@ export default class Header extends Component {
           </Container>
         </Navbar>
       </div>
-    ) : (
-      <></>
     );
   }
 }
