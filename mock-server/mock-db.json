@@ -1,0 +1,70 @@
+{
+    "products" : [
+        {
+            "id" : 1,
+            "product_id" : 126545,
+            "product_name" : "เสื้อแขนสั้น",
+            "product_detail" : "สวมใส่สบาย",
+            "product_price" : 200,
+            "product_unit" : "ตัว",
+            "product_thumbnail" : "https://www.lacoste.co.th/pub/media/catalog/product/cache/c687aa7517cf01e65c009f6943c2b1e9/t/f/tf8804_hhw_24.jpg",
+            "product_inventory" : 20,
+            "product_category" : "เสื้อ",
+            "product_shop": "ของโจร.com",
+            "product_shopID": 10536
+            
+        },
+        {
+            "id" : 2,
+            "product_id" : 654656,
+            "product_name" : "กางเกงขาสั้น",
+            "product_detail" : "ขาสั้น",
+            "product_price" : 150,
+            "product_unit" : "ตัว",
+            "product_thumbnail" : "https://f.btwcdn.com/store-35589/product/b8ef1fad-8636-9668-1ff0-5d00bbc91dbd.jpg",
+            "product_inventory" : 14,
+            "product_category" : "กางเกง",
+            "product_shop": "ของโจร.com",
+            "product_shopID": 10536
+        },
+        {
+            "id" : 3,
+            "product_id" : 897985,
+            "product_name" : "กางเกงขายาว",
+            "product_detail" : "สีดำ น่ารัก ขายาว ขาจั้ม ใส่สบาย สวยดี",
+            "product_price" : 350,
+            "product_unit" : "ตัว",
+            "product_thumbnail" : "https://www.egosportthailand.com/wp-content/uploads/2019/07/9049-01.jpg",
+            "product_inventory" : 96,
+            "product_category" : "กางเกง",
+            "product_shop": "ของโจร.com",
+            "product_shopID": 10536
+        },
+        {
+            "id" : 4,
+            "product_id" : 35456,
+            "product_name" : "รองเท้าช้างดาว",
+            "product_detail" : "ยางพาราไทยแท้ จากนครศรีธรรมราช",
+            "product_price" : 450,
+            "product_unit" : "คู่",
+            "product_thumbnail" : "https://cf.shopee.co.th/file/83fb9b18889eb5ed674600cb4e3007c9",
+            "product_inventory" : 5,
+            "product_category" : "รองเท้า",
+            "product_shop": "ของโจร.com",
+            "product_shopID": 10536
+        },
+        {
+            "id" : 5,
+            "product_id" : 78596,
+            "product_name" : "รองเท้าผ้าใบ",
+            "product_detail" : "รองเท้าผ้าใบสีขาว งามๆ",
+            "product_price" : 850,
+            "product_unit" : "คู่",
+            "product_thumbnail" : "https://cf.shopee.co.th/file/e53afbb0eaee7aa9be685a02411d1fa8",
+            "product_inventory" : 5,
+            "product_category" : "รองเท้า",
+            "product_shop": "ของฝาก.com",
+            "product_shopID": 11023
+        }
+    ]
+}

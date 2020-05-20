@@ -36,7 +36,7 @@ export default class Detail extends Component {
   }
 
   handleShopChange = (selectedShop) => {
-    this.setState({ selectedShop }, () => console.log(selectedShop));
+    this.setState({ selectedShop });
   };
 
   render() {

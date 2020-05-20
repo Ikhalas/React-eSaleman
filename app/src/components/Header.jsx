@@ -51,7 +51,7 @@ export default class Header extends Component {
       );
 
       axios
-        .post(process.env.REACT_APP_API_URL + "/users/add_new_user", {
+        .post(process.env.REACT_APP_API_URL + "/user/add_new_user", {
           user_id: currentUser.uid,
           user_email: currentUser.email,
           user_name: currentUser.displayName,
@@ -81,7 +81,7 @@ export default class Header extends Component {
   getUserDetail() {
     const { currentUser } = this.state;
     axios
-      .get(process.env.REACT_APP_API_URL + "/users/" + currentUser.uid)
+      .get(process.env.REACT_APP_API_URL + "/user/" + currentUser.uid)
       .then((res) => {
         this._isMounted &&
           this.setState(

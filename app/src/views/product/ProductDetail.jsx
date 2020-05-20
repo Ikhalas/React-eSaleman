@@ -37,39 +37,27 @@ export default class ProductDetail extends Component {
 
   getValueFromProps() {
     //console.log(this.props.match.params)
-    if (this.props.match.params) this._productId = this.props.match.params.id;
-    this._shopName = this.props.match.params.shop;
+    if (this.props.match.params) {
+      this._productId = this.props.match.params.id;
+      this._shopName = this.props.match.params.shop;
+    }
+    //console.log(this._productId + this._shopName)
   }
 
   getProduct() {
     axios
-      .get("http://localhost:5001/product/" + this._productId)
+      .get(process.env.REACT_APP_API_URL + "/product/" + this._productId)
       .then((res) => {
         //console.log(res.data);
         this._isMounted &&
           this.setState({
             product: res.data,
           });
-        this._isMounted && this.getProductCate();
-      });
-  }
-
-  getProductCate() {
-    const { product } = this.state;
-    //console.log(product);
-    axios
-      .get("http://localhost:5001/category/" + product.category_id)
-      .then((res) => {
-        //console.log(res.data);
-        this._isMounted &&
-          this.setState({
-            category: res.data,
-          });
       });
   }
 
   render() {
-    const { product, category, showURL } = this.state;
+    const { product, showURL } = this.state;
 
     return product ? (
       <>
@@ -81,7 +69,7 @@ export default class ProductDetail extends Component {
                 e-Salesman
               </Link>{" "}
               &nbsp;>&nbsp; {this._shopName} &nbsp;>&nbsp;{" "}
-              {category.category_name} &nbsp;>&nbsp; {product.product_name}
+              {product.product_category} &nbsp;>&nbsp; {product.product_name}
             </p>
             <div
               style={{
@@ -97,7 +85,7 @@ export default class ProductDetail extends Component {
                       width: "100%",
                       height: "400px",
                       backgroundColor: "#ffffff",
-                      backgroundImage: "url(" + product.product_image + ")",
+                      backgroundImage: "url(" + product.product_thumbnail + ")",
                       backgroundSize: "contain",
                       backgroundRepeat: "no-repeat",
                       backgroundPosition: "center",

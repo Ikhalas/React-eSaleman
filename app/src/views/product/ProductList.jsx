@@ -19,13 +19,20 @@ class ProductList extends Component {
     };
 
     this._isMounted = false;
-    this._selectedShop = this.props.shop.label;
+    //this._selectedShop = this.props.shop.shop_id;
   }
 
   componentDidMount() {
     this._isMounted = true;
     this._isMounted && this.getProduct();
-   
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    //console.log(this.props.shop.shop_id + " | " + prevProps.shop.shop_id)
+    if (this.props.shop.shop_id !== prevProps.shop.shop_id) {
+      //console.log("componentDidUpdate")
+      this._isMounted && this.getProduct();
+    }
   }
 
   componentWillUnmount() {
@@ -33,20 +40,27 @@ class ProductList extends Component {
   }
 
   getProduct() {
-    axios.get("http://localhost:5001/product/all").then((res) => { //mock data
-      //console.log(res.data);
-      this._isMounted &&
-        this.setState({
-          products: res.data,
-        });
-    }).catch((error) => {
-      console.log(error);
-    });
+    axios
+      .get(
+        process.env.REACT_APP_API_URL +
+          "/product/shop/" +
+          this.props.shop.shop_id
+      )
+      .then((res) => {
+        //console.log(res.data);
+        this._isMounted &&
+          this.setState({
+            products: res.data,
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   goToDetail = (product_id) => {
     this.props.history.push(
-      "/productdetail/" + this._selectedShop + "/" + product_id
+      "/productdetail/" + this.props.shop.label + "/" + product_id
     );
   };
 
@@ -58,6 +72,7 @@ class ProductList extends Component {
         return (
           <Col md="3" key={product.product_id}>
             <Card
+              style={{ cursor: "pointer" }}
               className="mb-3"
               onClick={() => this.goToDetail(product.product_id)}
             >
@@ -65,7 +80,7 @@ class ProductList extends Component {
                 style={{
                   width: "100%",
                   height: "250px",
-                  backgroundImage: "url(" + product.product_image + ")",
+                  backgroundImage: "url(" + product.product_thumbnail + ")",
                   backgroundSize: "100%",
                   backgroundRepeat: "no-repeat",
                   backgroundColor: "#fff",
@@ -88,7 +103,6 @@ class ProductList extends Component {
   };
 
   render() {
-    
     return (
       <div style={{ backgroundColor: "#f5f5f5" }}>
         <Container>

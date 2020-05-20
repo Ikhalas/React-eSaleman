@@ -40,7 +40,7 @@ export default class Register extends Component {
         auth.createUserWithEmailAndPassword(email, password).then(() => {
           auth.onAuthStateChanged((user) => {
             axios
-              .post(process.env.REACT_APP_API_URL + "/users/add_new_user", {
+              .post(process.env.REACT_APP_API_URL + "/user/add_new_user", {
                 user_id: user.uid,
                 user_email: user.email,
               })

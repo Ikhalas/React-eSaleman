@@ -26,8 +26,9 @@ export default class UserProfile extends Component {
   getUserDetail() {
     const { userid } = this.props;
     axios
-      .get(process.env.REACT_APP_API_URL + "/users/" + userid)
+      .get(process.env.REACT_APP_API_URL + "/user/" + userid)
       .then((res) => {
+        //console.log(res.data)
         this._isMounted &&
           this.setState({
             userDetail: res.data,
@@ -92,7 +93,7 @@ export default class UserProfile extends Component {
                       </>
                     )}
                     <span className="light-th" style={{ fontSize: "12px" }}>
-                      ID : {userDetail.user_id}
+                      Salesman ID : {userDetail.user_id}
                     </span>
                     <br />
                     <br />

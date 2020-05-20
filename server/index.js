@@ -5,8 +5,9 @@ var app = express();
 app.set('port', (process.env.PORT || 5000))
 app.use(cors())
 
-const users_router = require('./routes/users.js')
-const shop_router = require('./routes/shop.js')
+const users_router = require('./routes/users')
+const shop_router = require('./routes/shops')
+const product_router = require('./routes/products')
 
 
 app.get("/", (req, res) => {
@@ -14,8 +15,9 @@ app.get("/", (req, res) => {
   res.send('root')
 })
 
-app.use('/users', users_router)
+app.use('/user', users_router)
 app.use('/shop', shop_router)
+app.use('/product', product_router)
 
 
 

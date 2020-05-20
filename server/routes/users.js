@@ -14,10 +14,11 @@ product_router.get("/:id", (req, res) => {
     (err, rows, fields) => {
       if (err) {
         console.log("fail to query: " + err);
-        res.sendStatus(500); //Internal server error
+        res.status(500).json(err); ////Internal server error
         return;
       }
-      res.json(rows[0]);
+      res.status(200); //OK
+      res.json(rows[0]); 
     }
   );
 });
@@ -35,10 +36,12 @@ product_router.post("/add_new_user", (req, res) => {
   mysqlConnection.query(sql, newUser, (error, results, fields) => {
     if (error) {
       console.log("fail to created (user table): " + error);
+      res.sendStatus(500); //Internal server error
+      json(error); 
       throw error;
     }
-    res.sendStatus(201); //Created
-    console.log("created");
+    res.status(201); //Created
+    //console.log("created");
   });
 });
 
