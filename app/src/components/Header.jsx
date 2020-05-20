@@ -57,12 +57,12 @@ export default class Header extends Component {
           user_name: currentUser.displayName,
           user_photo: currentUser.photoURL,
         })
-        .then(() => {
-          this._isMounted && this.me();
-        })
         .catch((error) => {
           console.log(error);
         });
+     
+   
+      console.log("end");
     }
   }
 
