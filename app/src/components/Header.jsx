@@ -60,9 +60,7 @@ export default class Header extends Component {
         .catch((error) => {
           console.log(error);
         });
-     
-   
-      console.log("end");
+      //console.log("end");
     }
   }
 

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { auth } from "../../assets/api/firebase";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button, Input } from "reactstrap";
@@ -15,9 +16,13 @@ export default class ProductDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentUser: "",
       product: {},
-      category: {},
+      isShare: false,
+
       showURL: false, //default is false
+
+      product_share: [],
     };
 
     this._isMounted = false;
@@ -28,6 +33,7 @@ export default class ProductDetail extends Component {
   componentDidMount() {
     this._isMounted = true;
     this._isMounted && this.getValueFromProps();
+    this._isMounted && this.getUser();
     this._isMounted && this.getProduct();
   }
 
@@ -44,6 +50,18 @@ export default class ProductDetail extends Component {
     //console.log(this._productId + this._shopName)
   }
 
+  getUser() {
+    auth.onAuthStateChanged((user) => {
+      user
+        ? this._isMounted &&
+          this.setState({ currentUser: user }, () => {
+            console.log("uid | " + this.state.currentUser.uid);
+            this.gethareStatus();
+          })
+        : this._isMounted && this.setState({ currentUser: null });
+    });
+  }
+
   getProduct() {
     axios
       .get(process.env.REACT_APP_API_URL + "/product/" + this._productId)
@@ -56,8 +74,113 @@ export default class ProductDetail extends Component {
       });
   }
 
+  gethareStatus() {
+    const { currentUser } = this.state;
+
+    axios
+      .get(
+        process.env.REACT_APP_API_URL +
+          "/sharing/share_status/" +
+          currentUser.uid
+      )
+      .then((res) => {
+        //console.log(res.data);
+        this._isMounted &&
+          this.setState(
+            {
+              product_share: res.data,
+            },
+            () => this.checkShareStatus()
+          );
+      });
+  }
+
+  checkShareStatus() {
+    const { product_share } = this.state;
+    console.log("do checkShareStatus");
+    product_share &&
+      product_share.forEach((share) => {
+        console.log(this._productId + "===" + share.product_id);
+        if (this._productId == share.product_id) {
+          this.setState({ isShare: true, showURL: true }, () =>
+            console.log("isShare Found")
+          );
+        }
+      });
+  }
+
+  _shareFacebook() {
+    const { isShare } = this.state;
+    console.log("do _shareFacebook");
+
+    if (!isShare) {
+      this.postShareStatus();
+    }
+  }
+
+  _shareMessenger() {
+    const { isShare } = this.state;
+    console.log("do _shareMessenger");
+
+    if (!isShare) {
+      this.postShareStatus();
+    }
+  }
+
+  _shareLine() {
+    const { isShare } = this.state;
+    console.log("do _shareLine");
+
+    if (!isShare) {
+      this.postShareStatus();
+    }
+  }
+
+  _shareURL() {
+    const { isShare, showURL } = this.state;
+    console.log("do _shareURL");
+    this.setState({ showURL: !showURL })
+
+    if (!isShare) {
+      this.postShareStatus();
+    }
+  }
+
+  postShareStatus() {
+    const { currentUser, product } = this.state;
+
+    console.log("do postShareStatus");
+
+    let sharing = {
+      user_id: currentUser.uid,
+      share_date: new Date(),
+      share_time: new Date(),
+      share_status: "กำลังขาย",
+      product_id: product.product_id,
+      product_name: product.product_name,
+      product_detail: product.product_detail,
+      product_price: product.product_price,
+      product_unit: product.product_unit,
+      product_thumbnail: product.product_thumbnail,
+      product_category: product.product_category,
+      product_shop: product.product_shop,
+      product_shopID: product.product_shopID,
+      product_URL: product.product_URL,
+    };
+
+    axios
+      .post(process.env.REACT_APP_API_URL + "/sharing/new_share", sharing)
+      .then((res) => {
+        console.log("post success " + res.status);
+        // do something about response
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   render() {
-    const { product, showURL } = this.state;
+    const { product, showURL, isShare } = this.state;
 
     return product ? (
       <>
@@ -128,11 +251,30 @@ export default class ProductDetail extends Component {
                       </Col>
                     </Row>
                     <br />
+                    {/* share status */}
+                    <p style={{ fontSize: "13px" }}>
+                      สถานะการแชร์ :
+                      {isShare ? (
+                        <span
+                          style={{ fontSize: "15px" }}
+                          className="text-danger"
+                        >
+                          {" "}
+                          แชร์แล้ว
+                        </span>
+                      ) : (
+                        <span style={{ fontSize: "15px" }}>
+                          {" "}
+                          ยังไม่มีการแชร์
+                        </span>
+                      )}
+                    </p>
                     {/* facebook share button */}
                     <div
                       id="fb-share-button"
                       className="text-center"
                       style={{ width: "135px" }}
+                      onClick={() => this._shareFacebook()}
                     >
                       &nbsp;&nbsp;
                       <FacebookSVG />
@@ -144,6 +286,7 @@ export default class ProductDetail extends Component {
                       id="ms-share-button"
                       className="text-center"
                       style={{ width: "135px" }}
+                      onClick={() => this._shareMessenger()}
                     >
                       &nbsp;&nbsp;
                       <MessengerSVG />
@@ -155,6 +298,7 @@ export default class ProductDetail extends Component {
                       id="ln-share-button"
                       className="text-center"
                       style={{ width: "135px" }}
+                      onClick={() => this._shareLine()}
                     >
                       &nbsp;&nbsp;
                       <LineSVG />
@@ -169,7 +313,7 @@ export default class ProductDetail extends Component {
                             <Col md="10" style={{ paddingRight: 0 }}>
                               <Input
                                 className="light-th"
-                                defaultValue="URL from eOnlineShop....."
+                                defaultValue={product.product_URL}
                               />
                             </Col>
                             <Col
@@ -189,7 +333,7 @@ export default class ProductDetail extends Component {
                           <Button
                             color="danger"
                             block
-                            onClick={() => this.setState({ showURL: !showURL })}
+                            onClick={() => this._shareURL()}
                           >
                             ขอลิงค์สำหรับแชร์
                           </Button>

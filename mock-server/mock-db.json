@@ -11,7 +11,8 @@
             "product_inventory" : 20,
             "product_category" : "เสื้อ",
             "product_shop": "ของโจร.com",
-            "product_shopID": 10536
+            "product_shopID": 10536,
+            "product_URL": "https://www.fakeURL.com"
             
         },
         {
@@ -25,7 +26,8 @@
             "product_inventory" : 14,
             "product_category" : "กางเกง",
             "product_shop": "ของโจร.com",
-            "product_shopID": 10536
+            "product_shopID": 10536,
+            "product_URL": "https://www.fakeURL.com"
         },
         {
             "id" : 3,
@@ -38,7 +40,8 @@
             "product_inventory" : 96,
             "product_category" : "กางเกง",
             "product_shop": "ของโจร.com",
-            "product_shopID": 10536
+            "product_shopID": 10536,
+            "product_URL": "https://www.fakeURL.com"
         },
         {
             "id" : 4,
@@ -51,7 +54,8 @@
             "product_inventory" : 5,
             "product_category" : "รองเท้า",
             "product_shop": "ของโจร.com",
-            "product_shopID": 10536
+            "product_shopID": 10536,
+            "product_URL": "https://www.fakeURL.com"
         },
         {
             "id" : 5,
@@ -64,7 +68,8 @@
             "product_inventory" : 5,
             "product_category" : "รองเท้า",
             "product_shop": "ของฝาก.com",
-            "product_shopID": 11023
+            "product_shopID": 11023,
+            "product_URL": "https://www.fakeURL.com"
         }
     ]
 }

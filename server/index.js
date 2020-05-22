@@ -8,6 +8,7 @@ app.use(cors())
 const users_router = require('./routes/users')
 const shop_router = require('./routes/shops')
 const product_router = require('./routes/products')
+const sharing_router = require('./routes/sharing')
 
 
 app.get("/", (req, res) => {
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 app.use('/user', users_router)
 app.use('/shop', shop_router)
 app.use('/product', product_router)
+app.use('/sharing', sharing_router)
 
 
 
