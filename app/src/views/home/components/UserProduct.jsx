@@ -97,7 +97,7 @@ export default class UserProduct extends Component {
             <TabContent activeTab={activeTab}>
               <TabPane tabId="1">
 
-                <ProductSelling />
+                <ProductSelling userid = {this.props.userid} />
 
               </TabPane>
 

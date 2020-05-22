@@ -8,9 +8,27 @@ sharing_router.use(bodyParser.urlencoded({ extended: true }));
 
 //Get all sharing
 sharing_router.get("/share_status/:id", (req, res) => {
-  console.log(req.params.id)
+  //console.log(req.params.id);
   mysqlConnection.query(
     "SELECT product_id FROM `salesman_sharing` WHERE user_id = ?",
+    [req.params.id],
+    (err, rows, fields) => {
+      if (err) {
+        console.log("fail to query (`salesman_sharing` table): " + err);
+        res.status(500); //Internal server error
+        res.json(err);
+        return;
+      }
+      res.status(200); //OK
+      res.json(rows);
+    }
+  );
+});
+
+//Get all share selling
+sharing_router.get("/share_selling/:id", (req, res) => {
+  mysqlConnection.query(
+    "SELECT * FROM `salesman_sharing` WHERE share_status = 'กำลังขาย' AND user_id = ?",
     [req.params.id],
     (err, rows, fields) => {
       if (err) {
