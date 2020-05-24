@@ -103,7 +103,7 @@ export default class UserProduct extends Component {
 
               <TabPane tabId="2">
 
-                <ProductSold />
+                <ProductSold userid = {this.props.userid} />
 
               </TabPane>
             </TabContent>

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { auth } from "../assets/api/firebase";
@@ -14,7 +15,7 @@ import {
   Input,
 } from "reactstrap";
 
-export default class Header extends Component {
+class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -89,7 +90,10 @@ export default class Header extends Component {
             () => this.isFirstTimeLogin()
           );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/errconnection");
+      });
   }
 
   listOnMouseEnter = () => {
@@ -335,3 +339,5 @@ export default class Header extends Component {
     );
   }
 }
+
+export default withRouter(Header);

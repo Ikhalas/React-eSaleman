@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import Select from "react-select";
 import axios from "axios";
-import { Container } from "reactstrap";
+import { withRouter } from "react-router-dom";
 
+import Header from "../../components/Header";
+import { Container } from "reactstrap";
 import ProductList from "./ProductList";
 
-
-export default class Detail extends Component {
+class Product extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,8 +19,9 @@ export default class Detail extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.match);
     this._isMounted = true;
-    this._isMounted && this.getAllShop()
+    this._isMounted && this.getAllShop();
   }
 
   componentWillUnmount() {
@@ -32,7 +34,10 @@ export default class Detail extends Component {
       .then((res) => {
         this._isMounted && this.setState({ shopOptions: res.data });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/errconnection");
+      });
   }
 
   handleShopChange = (selectedShop) => {
@@ -43,6 +48,7 @@ export default class Detail extends Component {
     const { selectedShop, shopOptions } = this.state;
     return (
       <>
+        <Header />
         <div
           className="regular-th"
           style={{ backgroundColor: "#f5f5f5", height: "1500px" }}
@@ -68,3 +74,5 @@ export default class Detail extends Component {
     );
   }
 }
+
+export default withRouter(Product)

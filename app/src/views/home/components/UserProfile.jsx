@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
 import { Container, Row, Col } from "reactstrap";
 
-export default class UserProfile extends Component {
+class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentUser: "",
       userDetail: "",
+      productSelling: "",
+      productSold: "",
     };
 
     this._isMounted = false;
@@ -16,6 +19,8 @@ export default class UserProfile extends Component {
   componentDidMount() {
     this._isMounted = true;
     this._isMounted && this.getUserDetail();
+    this._isMounted && this.getSellingProduct();
+    this._isMounted && this.getSoldProduct();
     //console.log(this.props.userid);
   }
 
@@ -34,11 +39,44 @@ export default class UserProfile extends Component {
             userDetail: res.data,
           });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/errconnection");
+      });
+  }
+
+  getSellingProduct() {
+    const { userid } = this.props;
+    axios
+      .get(process.env.REACT_APP_API_URL + "/sharing/share_selling/" + userid)
+      .then((res) => {
+        //console.log(res.data);
+        this._isMounted &&
+          this.setState({
+            productSelling: res.data,
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/errconnection");
+      });
+  }
+
+  getSoldProduct() {
+    const { userid } = this.props;
+    axios
+      .get(process.env.REACT_APP_API_URL + "/sharing/share_sold/" + userid)
+      .then((res) => {
+        //console.log(res.data);
+        this._isMounted &&
+          this.setState({
+            productSold: res.data,
+          });
+      });
   }
 
   render() {
-    const { userDetail } = this.state;
+    const { userDetail, productSelling, productSold } = this.state;
     let userPhoto = "";
     userDetail.user_photo
       ? (userPhoto = userDetail.user_photo)
@@ -99,13 +137,13 @@ export default class UserProfile extends Component {
                     <br />
                     <span style={{ fontSize: "14px" }}>
                       <button className="button-like-a">
-                        กำลังขาย 0 รายการ
+                        กำลังขาย {productSelling.length} รายการ
                       </button>
                     </span>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <span style={{ fontSize: "14px" }}>
                       <button className="button-like-a">
-                        ขายสำเร็จ 0 รายการ
+                        ขายสำเร็จ {productSold.length} รายการ
                       </button>
                     </span>
                   </div>
@@ -127,3 +165,5 @@ export default class UserProfile extends Component {
     );
   }
 }
+
+export default withRouter(UserProfile);

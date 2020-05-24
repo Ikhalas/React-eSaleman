@@ -15,7 +15,7 @@ class Product_Selling extends Component {
   }
 
   componentDidMount() {
-    console.log("Product_Selling | " + this.props.userid);
+    console.log(this.props.match);
     this._isMounted = true;
     this._isMounted && this.getProduct();
   }
@@ -38,69 +38,74 @@ class Product_Selling extends Component {
             productSelling: res.data,
             ready: true,
           });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/errconnection");
       });
   }
 
   genProductCard() {
     const { productSelling } = this.state;
 
-    return productSelling.map((prod) => (
-      <Card
-        body
-        className="mt-2"
-        key={prod.id}
-        style={{ cursor: "pointer" }}
-        onClick={() => {
-          this.props.history.push(
-            "/productdetail/" + prod.product_shop + "/" + prod.product_id
-          );
-        }}
-      >
-        <Row>
-          <Col md="3">
-            <div
-              style={{
-                height: "200px",
-                backgroundColor: "#d9d9d9",
-                backgroundImage: "url(" + prod.product_thumbnail + ")",
-                backgroundSize: "100%",
-                backgroundRepeat: "no-repeat",
-              }}
-            ></div>
-          </Col>
-          <Col md="9">
-            {" "}
-            <CardTitle>
-              <h4>{prod.product_name}</h4>
-            </CardTitle>
-            <CardText>
-              <p className="light-th">
-                {this.convertDate(prod.share_date)} : {prod.share_time} น.
-              </p>
+    return (
+      productSelling &&
+      productSelling.map((prod) => (
+        <Card
+          body
+          className="mt-2"
+          key={prod.id}
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            this.props.history.push(
+              "/productdetail/" + prod.product_shop + "/" + prod.product_id
+            );
+          }}
+        >
+          <Row>
+            <Col md="3">
+              <div
+                style={{
+                  height: "200px",
+                  backgroundColor: "#d9d9d9",
+                  backgroundImage: "url(" + prod.product_thumbnail + ")",
+                  backgroundSize: "100%",
+                  backgroundRepeat: "no-repeat",
+                }}
+              ></div>
+            </Col>
+            <Col md="9">
+              {" "}
+              <CardTitle>
+                <h4>{prod.product_name}</h4>
+              </CardTitle>
+              <CardText>
+                <span className="light-th" style={{ fontSize: "13px" }}>
+                  {this.convertDate(prod.share_date)} : {prod.share_time} น.
+                </span>
+                <br />
+                <br />
+                <span className="light-th" style={{ fontSize: "15px" }}>
+                  รายละเอียด :
+                </span>
+                <span> {prod.product_detail}</span>
 
-              
-              <span className="light-th" style={{ fontSize: "15px" }}>
-                รายละเอียด :
-              </span>
-              <span>
-                {" "}
-                {prod.product_detail}
-              </span>
+                <br />
+                <br />
 
-              <br /><br />
-
-              <span className="light-th" style={{ fontSize: "15px" }}>
-                สถานะ :
-              </span>
-              <span className="text-danger" style={{ fontSize: "20px" }}>
-                {" "}
-                กำลังขาย
-              </span>
-            </CardText>
-          </Col>
-        </Row>
-      </Card>
-    ));
+                <span className="light-th" style={{ fontSize: "15px" }}>
+                  สถานะ :
+                </span>
+                <span className="text-danger" style={{ fontSize: "20px" }}>
+                  {" "}
+                  กำลังขาย
+                </span>
+              </CardText>
+            </Col>
+          </Row>
+        </Card>
+      ))
+    );
   }
 
   convertDate(date) {
@@ -136,11 +141,25 @@ class Product_Selling extends Component {
   }
 
   render() {
-    const { ready } = this.state;
+    const { ready, productSelling } = this.state;
     return ready ? (
       <div>
         <Row>
-          <Col md="12">{this.genProductCard()}</Col>
+          <Col md="12">
+            {productSelling.length ? (
+              <>{this.genProductCard()}</>
+            ) : (
+              <>
+                <div
+                  className="light-th text-danger"
+                  style={{ textAlign: "center", fontSize: "20px" }}
+                >
+                  <br /> <br />
+                  ยังไม่มีรายการ
+                </div>
+              </>
+            )}
+          </Col>
         </Row>
       </div>
     ) : (

@@ -53,8 +53,9 @@ class ProductList extends Component {
             products: res.data,
           });
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/errconnection");
       });
   }
 

@@ -1,33 +1,50 @@
 import React, { Component } from "react";
 import { auth } from "../../assets/api/firebase";
 import axios from "axios";
+import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button, Input } from "reactstrap";
 import { FacebookShareButton, LineShareButton } from "react-share";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import NotificationAlert from "react-notification-alert";
+
+import Header from "../../components/Header";
 
 import { ReactComponent as LineSVG } from "../../assets/icon/line.svg";
 import { ReactComponent as FacebookSVG } from "../../assets/icon/facebook.svg";
-import { ReactComponent as MessengerSVG } from "../../assets/icon/messenger.svg";
+//import { ReactComponent as MessengerSVG } from "../../assets/icon/messenger.svg";
 
 import "../../assets/css/facebook.css";
-import "../../assets/css/messenger.css";
 import "../../assets/css/line.css";
+//import "../../assets/css/messenger.css";
 
-export default class ProductDetail extends Component {
+var copiedAlert = {
+  place: "br",
+  message: (
+    <div>
+      <div style={{ fontSize: "18px", color: "white" }}>
+        copied to clipboard!
+      </div>
+    </div>
+  ),
+  type: "success",
+  //icon : "fas fa-check",
+  autoDismiss: 2,
+};
+
+class ProductDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       currentUser: "",
       product: {},
       isShare: false,
-
       showURL: false, //default is false
-
       product_share: [],
       reRender: false,
-
       ready_1: false,
       ready_2: false,
+      copied: false,
     };
 
     this._isMounted = false;
@@ -78,6 +95,10 @@ export default class ProductDetail extends Component {
             product: res.data,
             ready_1: true,
           });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/errconnection");
       });
   }
 
@@ -108,9 +129,14 @@ export default class ProductDetail extends Component {
           this.setState(
             {
               product_share: res.data,
+              ready_2: true,
             },
             () => this.checkShareStatus()
           );
+      })
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/errconnection");
       });
   }
 
@@ -121,7 +147,7 @@ export default class ProductDetail extends Component {
       product_share.forEach((share) => {
         console.log(this._productId + "===" + share.product_id);
         if (this._productId == share.product_id) {
-          this.setState({ isShare: true, showURL: true, ready_2: true }, () =>
+          this.setState({ isShare: true, showURL: true }, () =>
             console.log("isShare Found")
           );
         }
@@ -131,22 +157,19 @@ export default class ProductDetail extends Component {
   genURL() {
     const { product, currentUser } = this.state;
     this._productURL =
-      product.product_URL + "/" + currentUser.uid + "/" + this._share_id;
+      product.product_URL +
+      "/" +
+      product.product_id +
+      "/" +
+      currentUser.uid +
+      "/" +
+      this._share_id;
     //console.log(this._productURL);
   }
 
   _shareFacebook() {
     const { isShare } = this.state;
     console.log("do _shareFacebook");
-
-    if (!isShare) {
-      this.postShareStatus();
-    }
-  }
-
-  _shareMessenger() {
-    const { isShare } = this.state;
-    console.log("do _shareMessenger");
 
     if (!isShare) {
       this.postShareStatus();
@@ -222,6 +245,8 @@ export default class ProductDetail extends Component {
     this._isMounted && this.genURL();
     return ready_1 && ready_2 ? (
       <>
+        <Header />
+        <NotificationAlert ref="notify" />
         <div className="regular-th" style={{ backgroundColor: "#f5f5f5" }}>
           <br />
           <Container>
@@ -308,9 +333,7 @@ export default class ProductDetail extends Component {
                       )}
                     </p>
                     {/* facebook share button */}
-                    <FacebookShareButton
-                      url={this._productURL}                 
-                    >
+                    <FacebookShareButton url={this._productURL}>
                       <div
                         id="fb-share-button"
                         className="text-center"
@@ -337,19 +360,17 @@ export default class ProductDetail extends Component {
                     </div>
                     */}
                     {/* line share button */}
-                    <LineShareButton
-                      url={this._productURL}                 
-                    >
-                    <div
-                      id="ln-share-button"
-                      className="text-center"
-                      style={{ width: "205px" }}
-                      onClick={() => this._shareLine()}
-                    >
-                      &nbsp;&nbsp;
-                      <LineSVG />
-                      <span> LINE it!</span>&nbsp;&nbsp;
-                    </div>
+                    <LineShareButton url={this._productURL}>
+                      <div
+                        id="ln-share-button"
+                        className="text-center"
+                        style={{ width: "205px" }}
+                        onClick={() => this._shareLine()}
+                      >
+                        &nbsp;&nbsp;
+                        <LineSVG />
+                        <span> LINE it!</span>&nbsp;&nbsp;
+                      </div>
                     </LineShareButton>
                     {/* gen url button */}
                     <div style={{ width: "430px" }}>
@@ -368,9 +389,19 @@ export default class ProductDetail extends Component {
                               className="text-right"
                               style={{ paddingLeft: 6 }}
                             >
-                              <Button color="danger" block>
-                                <i className="far fa-copy"></i>
-                              </Button>
+                              <CopyToClipboard
+                                onCopy={() => {
+                                  this.setState({ copied: true });
+                                  this.refs.notify.notificationAlert(
+                                    copiedAlert
+                                  );
+                                }}
+                                text={this._productURL}
+                              >
+                                <Button color="danger" block>
+                                  <i className="far fa-copy"></i>
+                                </Button>
+                              </CopyToClipboard>
                             </Col>
                           </Row>
                         </>
@@ -458,3 +489,5 @@ export default class ProductDetail extends Component {
     );
   }
 }
+
+export default withRouter(ProductDetail)

@@ -43,6 +43,24 @@ sharing_router.get("/share_selling/:id", (req, res) => {
   );
 });
 
+//Get all share sold
+sharing_router.get("/share_sold/:id", (req, res) => {
+  mysqlConnection.query(
+    "SELECT * FROM `salesman_sharing` WHERE share_status = 'ขายแล้ว' AND user_id = ?",
+    [req.params.id],
+    (err, rows, fields) => {
+      if (err) {
+        console.log("fail to query (`salesman_sharing` table): " + err);
+        res.status(500); //Internal server error
+        res.json(err);
+        return;
+      }
+      res.status(200); //OK
+      res.json(rows);
+    }
+  );
+});
+
 //Post share facebook
 sharing_router.post("/new_share", (req, res) => {
   let sharing = {

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { auth } from "../../assets/api/firebase";
+import Header from '../../components/Header'
 import UserProfile from "./components/UserProfile";
 import UserProduct from "./components/UserProduct";
 
@@ -31,6 +32,7 @@ export default class Home extends Component {
     const { currentUser } = this.state;
     return (
       <>
+      <Header />
         <div className="regular-th" style={{ backgroundColor: "#f5f5f5" }}>
           {currentUser ? (
             <>
