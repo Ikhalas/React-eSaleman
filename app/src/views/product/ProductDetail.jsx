@@ -3,6 +3,7 @@ import { auth } from "../../assets/api/firebase";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button, Input } from "reactstrap";
+import { FacebookShareButton, LineShareButton } from "react-share";
 
 import { ReactComponent as LineSVG } from "../../assets/icon/line.svg";
 import { ReactComponent as FacebookSVG } from "../../assets/icon/facebook.svg";
@@ -23,11 +24,20 @@ export default class ProductDetail extends Component {
       showURL: false, //default is false
 
       product_share: [],
+      reRender: false,
+
+      ready_1: false,
+      ready_2: false,
     };
 
     this._isMounted = false;
     this._productId = 0;
     this._shopName = "";
+    this._share_id =
+      this.makeid(8) +
+      new Date().getTime() +
+      Math.floor(Math.random() * 1005101); //random value
+    this._productURL = "";
   }
 
   componentDidMount() {
@@ -35,6 +45,14 @@ export default class ProductDetail extends Component {
     this._isMounted && this.getValueFromProps();
     this._isMounted && this.getUser();
     this._isMounted && this.getProduct();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    //console.log(this.state.reRender)
+    if (this.state.reRender !== prevState.reRender) {
+      console.log("componentDidUpdate");
+      this._isMounted && this.getUser(); //check share status again
+    }
   }
 
   componentWillUnmount() {
@@ -50,6 +68,19 @@ export default class ProductDetail extends Component {
     //console.log(this._productId + this._shopName)
   }
 
+  getProduct() {
+    axios
+      .get(process.env.REACT_APP_API_URL + "/product/" + this._productId)
+      .then((res) => {
+        //console.log(res.data);
+        this._isMounted &&
+          this.setState({
+            product: res.data,
+            ready_1: true,
+          });
+      });
+  }
+
   getUser() {
     auth.onAuthStateChanged((user) => {
       user
@@ -60,18 +91,6 @@ export default class ProductDetail extends Component {
           })
         : this._isMounted && this.setState({ currentUser: null });
     });
-  }
-
-  getProduct() {
-    axios
-      .get(process.env.REACT_APP_API_URL + "/product/" + this._productId)
-      .then((res) => {
-        //console.log(res.data);
-        this._isMounted &&
-          this.setState({
-            product: res.data,
-          });
-      });
   }
 
   gethareStatus() {
@@ -102,11 +121,18 @@ export default class ProductDetail extends Component {
       product_share.forEach((share) => {
         console.log(this._productId + "===" + share.product_id);
         if (this._productId == share.product_id) {
-          this.setState({ isShare: true, showURL: true }, () =>
+          this.setState({ isShare: true, showURL: true, ready_2: true }, () =>
             console.log("isShare Found")
           );
         }
       });
+  }
+
+  genURL() {
+    const { product, currentUser } = this.state;
+    this._productURL =
+      product.product_URL + "/" + currentUser.uid + "/" + this._share_id;
+    //console.log(this._productURL);
   }
 
   _shareFacebook() {
@@ -139,7 +165,7 @@ export default class ProductDetail extends Component {
   _shareURL() {
     const { isShare, showURL } = this.state;
     console.log("do _shareURL");
-    this.setState({ showURL: !showURL })
+    this.setState({ showURL: !showURL });
 
     if (!isShare) {
       this.postShareStatus();
@@ -153,6 +179,7 @@ export default class ProductDetail extends Component {
 
     let sharing = {
       user_id: currentUser.uid,
+      share_id: this._share_id,
       share_date: new Date(),
       share_time: new Date(),
       share_status: "กำลังขาย",
@@ -167,22 +194,33 @@ export default class ProductDetail extends Component {
       product_shopID: product.product_shopID,
       product_URL: product.product_URL,
     };
-
+    //console.log(sharing)
     axios
       .post(process.env.REACT_APP_API_URL + "/sharing/new_share", sharing)
       .then((res) => {
         console.log("post success " + res.status);
-        // do something about response
+        this.setState({ reRender: true });
       })
       .catch((err) => {
         console.error(err);
       });
   }
 
-  render() {
-    const { product, showURL, isShare } = this.state;
+  makeid(length) {
+    var result = "";
+    var characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
 
-    return product ? (
+  render() {
+    const { product, showURL, isShare, ready_1, ready_2 } = this.state;
+    this._isMounted && this.genURL();
+    return ready_1 && ready_2 ? (
       <>
         <div className="regular-th" style={{ backgroundColor: "#f5f5f5" }}>
           <br />
@@ -270,18 +308,23 @@ export default class ProductDetail extends Component {
                       )}
                     </p>
                     {/* facebook share button */}
-                    <div
-                      id="fb-share-button"
-                      className="text-center"
-                      style={{ width: "135px" }}
-                      onClick={() => this._shareFacebook()}
+                    <FacebookShareButton
+                      url={this._productURL}                 
                     >
-                      &nbsp;&nbsp;
-                      <FacebookSVG />
-                      <span> Share</span>&nbsp;&nbsp;
-                    </div>
-                    &nbsp;&nbsp;
-                    {/* messenger share button */}
+                      <div
+                        id="fb-share-button"
+                        className="text-center"
+                        style={{ width: "205px" }}
+                        onClick={() => this._shareFacebook()}
+                      >
+                        &nbsp;&nbsp;
+                        <FacebookSVG />
+                        <span> Share</span>&nbsp;&nbsp;
+                      </div>
+                    </FacebookShareButton>
+                    &nbsp;&nbsp;&nbsp;
+                    {/* messenger share button 
+
                     <div
                       id="ms-share-button"
                       className="text-center"
@@ -292,18 +335,22 @@ export default class ProductDetail extends Component {
                       <MessengerSVG />
                       <span> Message</span>&nbsp;&nbsp;
                     </div>
-                    &nbsp;&nbsp;
+                    */}
                     {/* line share button */}
+                    <LineShareButton
+                      url={this._productURL}                 
+                    >
                     <div
                       id="ln-share-button"
                       className="text-center"
-                      style={{ width: "135px" }}
+                      style={{ width: "205px" }}
                       onClick={() => this._shareLine()}
                     >
                       &nbsp;&nbsp;
                       <LineSVG />
                       <span> LINE it!</span>&nbsp;&nbsp;
                     </div>
+                    </LineShareButton>
                     {/* gen url button */}
                     <div style={{ width: "430px" }}>
                       <br />
@@ -313,7 +360,7 @@ export default class ProductDetail extends Component {
                             <Col md="10" style={{ paddingRight: 0 }}>
                               <Input
                                 className="light-th"
-                                defaultValue={product.product_URL}
+                                defaultValue={this._productURL}
                               />
                             </Col>
                             <Col

@@ -47,6 +47,7 @@ sharing_router.get("/share_selling/:id", (req, res) => {
 sharing_router.post("/new_share", (req, res) => {
   let sharing = {
     user_id: req.body.user_id,
+    share_id: req.body.share_id,
     share_date: req.body.share_date,
     share_time: req.body.share_time,
     share_status: req.body.share_status,
@@ -71,6 +72,7 @@ sharing_router.post("/new_share", (req, res) => {
       return;
     }
     res.status(201); //Created
+    res.send('Created'); //Created
   });
 });
 
