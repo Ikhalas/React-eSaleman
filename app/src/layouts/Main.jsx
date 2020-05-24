@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 //import Header from "../components/Header";
+import Footer from "../components/Footer"
 import Home from "../views/home/Home";
 import Product from "../views/product/Product";
 import ProductDetail from "../views/product/ProductDetail";
@@ -30,6 +31,7 @@ export default class Main extends Component {
     return (
       <BrowserRouter>
         {this.renderRouter()}
+        <Footer />
       </BrowserRouter>
     );
   }
