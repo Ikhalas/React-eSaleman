@@ -58,8 +58,12 @@ class Header extends Component {
           user_name: currentUser.displayName,
           user_photo: currentUser.photoURL,
         })
-        .catch((error) => {
-          console.log(error);
+        .then((res) => {
+          console.log(res);
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
         });
       //console.log("end");
     }
@@ -202,7 +206,7 @@ class Header extends Component {
             <Nav className="mr-auto" navbar>
               <Link to="/">
                 <img
-                  src={require("../assets/images/logo_1.png")}
+                  src={require("../assets/images/logo_2.png")}
                   alt="logo"
                   width="65%"
                 />

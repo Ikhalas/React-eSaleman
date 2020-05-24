@@ -41,6 +41,7 @@ product_router.post("/add_new_user", (req, res) => {
       throw error;
     }
     res.status(201); //Created
+    res.send('created')
     //console.log("created");
   });
 });
