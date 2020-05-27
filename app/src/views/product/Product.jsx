@@ -32,7 +32,7 @@ class Product extends Component {
     axios
       .get(process.env.REACT_APP_API_URL + "/shop")
       .then((res) => {
-        this._isMounted && this.setState({ shopOptions: res.data });
+        this._isMounted && this.setState({ shopOptions: res.data }, ()=> this.setState({selectedShop : this.state.shopOptions[0]}));
       })
       .catch((err) => {
         console.log(err);
@@ -51,7 +51,7 @@ class Product extends Component {
         <Header />
         <div
           className="regular-th"
-          style={{ backgroundColor: "#f5f5f5", height: "1500px" }}
+          style={{ backgroundColor: "#f5f5f5", minHeight: "100vh" }}
         >
           <div style={{ backgroundColor: "#ffffff" }}>
             <Container fluid={true} style={{ width: "60%" }}>
@@ -65,8 +65,7 @@ class Product extends Component {
                 options={shopOptions}
               />
             </Container>
-            <hr />
-
+            
             {selectedShop && <ProductList shop={selectedShop} />}
           </div>
         </div>

@@ -58,7 +58,8 @@ class Product_Selling extends Component {
           style={{ cursor: "pointer" }}
           onClick={() => {
             this.props.history.push(
-              "/productdetail/" + prod.product_shop + "/" + prod.product_id
+              `/productdetail/${prod.product_shop}/${prod.product_shopID}/${prod.product_id}`
+      
             );
           }}
         >
@@ -147,7 +148,10 @@ class Product_Selling extends Component {
         <Row>
           <Col md="12">
             {productSelling.length ? (
-              <>{this.genProductCard()}</>
+              <>
+                {this.genProductCard()}
+                <br />
+              </>
             ) : (
               <>
                 <div

@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx nodemon index.js -w"
+    "dev": "npx nodemon src/index.js -w",
+    "build": "babel src -s -D -d dist --presets env,stage-0",
+    "start": "node dist",
+    "prestart": "npm run -s build"
   },
   "keywords": [],
   "author": "",
@@ -14,9 +17,14 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "path": "^0.12.7"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
     "nodemon": "^2.0.3"
   }
 }

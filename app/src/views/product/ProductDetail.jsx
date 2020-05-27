@@ -21,11 +21,9 @@ import "../../assets/css/line.css";
 var copiedAlert = {
   place: "br",
   message: (
-    <div>
-      <div style={{ fontSize: "18px", color: "white" }}>
-        copied to clipboard!
+      <div style={{ fontSize: "18px", color: "gray" }}>
+        copied to clipboard
       </div>
-    </div>
   ),
   type: "success",
   //icon : "fas fa-check",

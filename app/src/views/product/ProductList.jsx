@@ -48,8 +48,7 @@ class ProductList extends Component {
       )
       .then((res) => {
         //console.log(res.data);
-        this._isMounted &&
-          this.setState({products: res.data});
+        this._isMounted && this.setState({ products: res.data });
       })
       .catch((err) => {
         console.log(err);
@@ -65,7 +64,7 @@ class ProductList extends Component {
 
   genProducts = () => {
     const { products } = this.state;
-    
+
     return (
       products &&
       products.map((product) => {
@@ -103,12 +102,31 @@ class ProductList extends Component {
   };
 
   render() {
-    return (
+    const { products } = this.state;
+    return products ? (
       <div style={{ backgroundColor: "#f5f5f5" }}>
-        <Container>
-          <Row>{this.genProducts()}</Row>
-        </Container>
+        <hr />
+        {products.length ? (
+          <>
+            {" "}
+            <Container>
+              <Row>{this.genProducts()}</Row>
+            </Container>
+          </>
+        ) : (
+          <>
+            <div
+              className="light-th text-danger"
+              style={{ textAlign: "center", fontSize: "20px" }}
+            >
+              <br />
+              ยังไม่มีรายการสินค้า
+            </div>
+          </>
+        )}
       </div>
+    ) : (
+      <></>
     );
   }
 }

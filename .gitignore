@@ -15,8 +15,6 @@ src/assets/api/firebase.js
 # production
 /build
 
-#env
-.env.production
 
 # misc
 .DS_Store
