@@ -67,7 +67,6 @@ class ProductDetail extends Component {
   componentDidUpdate(prevProps, prevState) {
     //console.log(this.state.reRender)
     if (this.state.reRender !== prevState.reRender) {
-      console.log("componentDidUpdate");
       this._isMounted && this.getUser(); //check share status again
     }
   }
@@ -80,14 +79,16 @@ class ProductDetail extends Component {
     //console.log(this.props.match.params)
     if (this.props.match.params) {
       this._productId = this.props.match.params.id;
-      this._shopName = this.props.match.params.shop;
+      this._shopName = this.props.match.params.shopname;
+      this._shopId = this.props.match.params.shopid;
     }
     //console.log(this._productId + this._shopName)
   }
 
   getProduct() {
+    //console.log(`${process.env.REACT_APP_API_URL}/product/${this._shopName}/${this._productId}`)
     axios
-      .get(process.env.REACT_APP_API_URL + "/product/" + this._productId)
+      .get(`${process.env.REACT_APP_API_URL}/product/getbyid/${this._shopId}/${this._productId}`)
       .then((res) => {
         //console.log(res.data);
         this._isMounted &&
@@ -107,7 +108,7 @@ class ProductDetail extends Component {
       user
         ? this._isMounted &&
           this.setState({ currentUser: user }, () => {
-            console.log("uid | " + this.state.currentUser.uid);
+            //console.log("uid | " + this.state.currentUser.uid);
             this.gethareStatus();
           })
         : this._isMounted && this.setState({ currentUser: null });
@@ -142,14 +143,13 @@ class ProductDetail extends Component {
 
   checkShareStatus() {
     const { product_share } = this.state;
-    console.log("do checkShareStatus");
+    //console.log("do checkShareStatus");
     product_share &&
       product_share.forEach((share) => {
-        console.log(this._productId + "===" + share.product_id);
-        if (this._productId == share.product_id) {
-          this.setState({ isShare: true, showURL: true }, () =>
-            console.log("isShare Found")
-          );
+        //console.log(typeof(this._productId) + "===" + typeof(share.product_id.toString()));
+        
+        if (this._productId === share.product_id.toString()) {
+          this.setState({ isShare: true, showURL: true });
         }
       });
   }
@@ -169,7 +169,7 @@ class ProductDetail extends Component {
 
   _shareFacebook() {
     const { isShare } = this.state;
-    console.log("do _shareFacebook");
+    //console.log("do _shareFacebook");
 
     if (!isShare) {
       this.postShareStatus();
@@ -178,7 +178,7 @@ class ProductDetail extends Component {
 
   _shareLine() {
     const { isShare } = this.state;
-    console.log("do _shareLine");
+    //console.log("do _shareLine");
 
     if (!isShare) {
       this.postShareStatus();
@@ -187,7 +187,7 @@ class ProductDetail extends Component {
 
   _shareURL() {
     const { isShare, showURL } = this.state;
-    console.log("do _shareURL");
+    //console.log("do _shareURL");
     this.setState({ showURL: !showURL });
 
     if (!isShare) {
@@ -198,7 +198,7 @@ class ProductDetail extends Component {
   postShareStatus() {
     const { currentUser, product } = this.state;
 
-    console.log("do postShareStatus");
+    //console.log("do postShareStatus");
 
     let sharing = {
       user_id: currentUser.uid,
@@ -221,7 +221,7 @@ class ProductDetail extends Component {
     axios
       .post(process.env.REACT_APP_API_URL + "/sharing/new_share", sharing)
       .then((res) => {
-        console.log("post success " + res.status);
+        //console.log("post success " + res.status);
         this.setState({ reRender: true });
       })
       .catch((err) => {

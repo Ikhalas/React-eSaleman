@@ -49,9 +49,7 @@ class ProductList extends Component {
       .then((res) => {
         //console.log(res.data);
         this._isMounted &&
-          this.setState({
-            products: res.data,
-          });
+          this.setState({products: res.data});
       })
       .catch((err) => {
         console.log(err);
@@ -61,12 +59,13 @@ class ProductList extends Component {
 
   goToDetail = (product_id) => {
     this.props.history.push(
-      "/productdetail/" + this.props.shop.label + "/" + product_id
+      `/productdetail/${this.props.shop.label}/${this.props.shop.shop_id}/${product_id}`
     );
   };
 
   genProducts = () => {
     const { products } = this.state;
+    
     return (
       products &&
       products.map((product) => {

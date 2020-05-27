@@ -9,6 +9,7 @@ product_router.get("/", (req, res) => {
     .then((response) => {
       res.status(200); //OK
       res.json(response.data);
+     
     })
     .catch((error) => {
       console.log("fail to query: " + error);
@@ -17,9 +18,9 @@ product_router.get("/", (req, res) => {
 });
 
 //Get a products by products_id
-product_router.get("/:id", (req, res) => {
+product_router.get("/getbyid/:shopid/:id", (req, res) => {
   axios
-    .get("http://localhost:3001/products/?product_id=" + req.params.id)
+    .get(`http://localhost:3001/products/?product_shopID=${req.params.shopid}&product_id=${req.params.id}`)
     .then((response) => {
       res.status(200); //OK
       res.json(response.data[0]);
@@ -37,6 +38,7 @@ product_router.get("/shop/:id", (req, res) => {
     .then((response) => {
       res.status(200); //OK
       res.json(response.data);
+      //console.log("pass")
     })
     .catch((error) => {
       console.log("fail to query: " + error);

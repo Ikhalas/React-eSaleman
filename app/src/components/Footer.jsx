@@ -9,21 +9,21 @@ export default class Footer extends Component {
       <>
         <footer className="footer-distributed regular-th">
           <div className="footer-right">
-            <a href="#">
+            <Link to="/">
               <i className="fab fa-facebook-f" />
-            </a>
+            </Link>
             &nbsp;
-            <a href="#">
+            <Link to="/">
               <i className="fab fa-facebook-messenger" />
-            </a>
+            </Link>
             &nbsp;
-            <a href="#">
+            <Link to="/">
               <i className="fab fa-line" />
-            </a>
+            </Link>
             &nbsp;
-            <a href="#">
+            <Link to="/">
               <i className="fas fa-phone" />
-            </a>
+            </Link>
           </div>
           <div className="footer-left">
             <p className="footer-links">

@@ -19,7 +19,7 @@ export default class Main extends Component {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/product" component={Product} />
-        <Route exact path="/productdetail/:shop/:id" component={ProductDetail}/>
+        <Route exact path="/productdetail/:shopname/:shopid/:id" component={ProductDetail}/>
         <Route exact path="/newshop" component={Addnewshop}/>
         <Route exact path="/errconnection" component={BadConnection}/>
         <Route component={NotFound} />

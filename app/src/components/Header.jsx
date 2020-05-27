@@ -44,11 +44,7 @@ class Header extends Component {
     const { currentUser, userDetail } = this.state;
 
     if (currentUser.providerData[0].providerId !== "password" && !userDetail) {
-      console.log(
-        "log in with " +
-          currentUser.providerData[0].providerId +
-          " and this is my first time"
-      );
+      //console.log("log in with " + currentUser.providerData[0].providerId + " and this is my first time");
 
       axios
         .post(process.env.REACT_APP_API_URL + "/user/add_new_user", {
@@ -58,7 +54,6 @@ class Header extends Component {
           user_photo: currentUser.photoURL,
         })
         .then((res) => {
-          console.log(res);
           window.location.reload();
         })
         .catch((err) => {

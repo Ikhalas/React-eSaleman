@@ -45,7 +45,7 @@ export default class Register extends Component {
                 user_email: user.email,
               })
               .then(function (response) {
-                console.log(response);
+                //console.log(response);
               })
               .catch(function (error) {
                 console.log(error);
