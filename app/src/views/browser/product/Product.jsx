@@ -3,7 +3,7 @@ import Select from "react-select";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
 import { Container } from "reactstrap";
 import ProductList from "./ProductList";
 

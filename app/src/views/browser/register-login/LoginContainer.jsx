@@ -54,7 +54,7 @@ export default class LoginContainer extends Component {
           <Navbar light expand="md" style={{ height: "100px" }}>
             <NavbarBrand href="/">
               <img
-                src={require("../../assets/images/logo_2.png")}
+                src={require("../../../assets/images/logo_2.png")}
                 alt="logo"
                 width="65%"
               />

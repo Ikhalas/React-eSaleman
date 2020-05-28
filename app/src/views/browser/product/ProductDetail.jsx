@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { auth } from "../../assets/api/firebase";
+import { auth } from "../../../assets/api/firebase";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -8,14 +8,14 @@ import { FacebookShareButton, LineShareButton } from "react-share";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import NotificationAlert from "react-notification-alert";
 
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
 
-import { ReactComponent as LineSVG } from "../../assets/icon/line.svg";
-import { ReactComponent as FacebookSVG } from "../../assets/icon/facebook.svg";
+import { ReactComponent as LineSVG } from "../../../assets/icon/line.svg";
+import { ReactComponent as FacebookSVG } from "../../../assets/icon/facebook.svg";
 //import { ReactComponent as MessengerSVG } from "../../assets/icon/messenger.svg";
 
-import "../../assets/css/facebook.css";
-import "../../assets/css/line.css";
+import "../../../assets/css/facebook.css";
+import "../../../assets/css/line.css";
 //import "../../assets/css/messenger.css";
 
 var copiedAlert = {

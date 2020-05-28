@@ -80,7 +80,7 @@ class UserProfile extends Component {
     let userPhoto = "";
     userDetail.user_photo
       ? (userPhoto = userDetail.user_photo)
-      : (userPhoto = require("../../../assets/images/user.png"));
+      : (userPhoto = require("../../../../assets/images/user.png"));
     return (
       <>
         <div style={{ backgroundColor: "#ffffff" }}>

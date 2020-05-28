@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { isBrowser, isMobile } from "react-device-detect";
 import { auth } from "./assets/api/firebase";
 
-import Main from "./layouts/Main";
-import LoginContainer from "./views/register-login/LoginContainer";
+import MainBrowser from "./layouts/MainBrowser";
+import LoginContainer from "./views/browser/register-login/LoginContainer";
 
 export default class App extends Component {
   constructor(props) {
@@ -34,8 +35,13 @@ export default class App extends Component {
   render() {
     const { currentUser, readyForRender } = this.state;
     return readyForRender ? (
-      <div>{currentUser ? <Main /> : <LoginContainer />}</div>
-     
+      <div>
+        {currentUser ? (
+          <>{isBrowser ? <MainBrowser /> : <></>}</>
+        ) : (
+          <LoginContainer />
+        )}
+      </div>
     ) : (
       <></>
     );

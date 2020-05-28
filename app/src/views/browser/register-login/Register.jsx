@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { auth } from "../../assets/api/firebase";
+import { auth } from "../../../assets/api/firebase";
 import { Row, Col, Input, InputGroup, Button, Form } from "reactstrap";
 
-import "../../assets/css/login-page.css";
+import "../../../assets/css/login-page.css";
 
 
 export default class Register extends Component {

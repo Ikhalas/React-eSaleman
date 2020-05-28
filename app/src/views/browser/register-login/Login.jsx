@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { auth } from "../../assets/api/firebase";
+import { auth } from "../../../assets/api/firebase";
 
 import {
   Row,
@@ -10,7 +10,7 @@ import {
   Form,
 } from "reactstrap";
 
-import "../../assets/css/login-page.css";
+import "../../../assets/css/login-page.css";
 
 export default class Login extends Component {
   constructor(props) {

@@ -3,17 +3,17 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 //import Header from "../components/Header";
 import Footer from "../components/Footer"
-import Home from "../views/home/Home";
-import Product from "../views/product/Product";
-import ProductDetail from "../views/product/ProductDetail";
-import Addnewshop from "../views/newshop/Addnewshop"
-import BadConnection from "../views/error/BadConnection"
-import NotFound from '../views/error/NotFound'
+import Home from "../views/browser/home/Home";
+import Product from "../views/browser/product/Product";
+import ProductDetail from "../views/browser/product/ProductDetail";
+import Addnewshop from "../views/browser/newshop/Addnewshop"
+import BadConnection from "../views/browser/error/BadConnection"
+import NotFound from '../views/browser/error/NotFound'
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/app.css";
 
-export default class Main extends Component {
+export default class MainBrowser extends Component {
   renderRouter() {
     return (
       <Switch>
