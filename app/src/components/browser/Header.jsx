@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
-import { auth } from "../assets/api/firebase";
+import { auth } from "../../assets/api/firebase";
 import {
   Container,
   Navbar,
@@ -20,8 +20,6 @@ class Header extends Component {
     this.state = {
       list_icon: "far fa-list-alt",
       list_text: false,
-      join_icon: "far fa-handshake",
-      join_text: false,
       about_icon: "far fa-address-card",
       about_text: false,
       login_text: false,
@@ -173,7 +171,7 @@ class Header extends Component {
                       src={
                         userDetail.user_photo
                           ? userDetail.user_photo
-                          : require("../assets/images/user.png")
+                          : require("../../assets/images/user.png")
                       }
                       width="20px"
                       style={{ borderRadius: "50%" }}
@@ -200,7 +198,7 @@ class Header extends Component {
             <Nav className="mr-auto" navbar>
               <Link to="/">
                 <img
-                  src={require("../assets/images/logo_2.png")}
+                  src={require("../../assets/images/logo_2.png")}
                   alt="logo"
                   width="65%"
                 />

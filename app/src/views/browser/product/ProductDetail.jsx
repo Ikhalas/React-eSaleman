@@ -8,7 +8,7 @@ import { FacebookShareButton, LineShareButton } from "react-share";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import NotificationAlert from "react-notification-alert";
 
-import Header from "../../../components/Header";
+import Header from "../../../components/browser/Header";
 
 import { ReactComponent as LineSVG } from "../../../assets/icon/line.svg";
 import { ReactComponent as FacebookSVG } from "../../../assets/icon/facebook.svg";

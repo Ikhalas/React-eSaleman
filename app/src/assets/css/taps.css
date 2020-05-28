@@ -1,0 +1,25 @@
+/* Place the navbar at the bottom of the page, and make it stick */
+.taps {
+  background-color: #fff;
+  box-shadow: 0 -5px 3px -5px #666;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Style the links inside the navigation bar */
+.taps a {
+  float: left;
+  display: block;
+  color: #999;
+  text-align: center;
+  padding: 3px 16px;
+  text-decoration: none;
+  font-size: 11px;
+}
+
+/* Add a color to the active/current link */
+.taps a.active {
+  color: #d93731;
+}

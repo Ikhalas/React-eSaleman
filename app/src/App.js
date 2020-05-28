@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { isBrowser, isMobile } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 import { auth } from "./assets/api/firebase";
 
 import MainBrowser from "./layouts/MainBrowser";
+import MainMobile from "./layouts/MainMobile"
 import LoginContainer from "./views/browser/register-login/LoginContainer";
 
 export default class App extends Component {
@@ -37,7 +38,7 @@ export default class App extends Component {
     return readyForRender ? (
       <div>
         {currentUser ? (
-          <>{isBrowser ? <MainBrowser /> : <></>}</>
+          <>{isMobile ? <MainMobile /> : <MainBrowser />}</>
         ) : (
           <LoginContainer />
         )}

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { auth } from "../../../assets/api/firebase";
-import Header from '../../../components/Header'
+import Header from '../../../components/browser/Header'
 import UserProfile from "./components/UserProfile";
 import UserProduct from "./components/UserProduct";
 
