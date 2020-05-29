@@ -19,7 +19,6 @@ class Product extends Component {
   }
 
   componentDidMount() {
-    //console.log(this.props.match);
     this._isMounted = true;
     this._isMounted && this.getAllShop();
   }

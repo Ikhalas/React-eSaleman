@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "../../assets/css/taps.css";
 
@@ -8,88 +8,100 @@ export default class Footer extends Component {
     super(props);
     this.state = {
       homeTap: "active",
-      productTap: "",
+      shopTap: "",
+      searchTap: "",
       profileTap: "",
-      otherTap: "",
     };
   }
 
-  handleActiveTap = (tap) => {
-    if (tap === 1) {
+  componentDidMount() {
+    console.log(this.props)
+    this.handleActiveTap()
+  }
+
+  handleActiveTap = () => {
+    const {path} = this.props
+    if (path === 'home') {
       this.setState({
         homeTap: "active",
-        productTap: "",
+        shopTap: "",
+        searchTap: "",
         profileTap: "",
-        otherTap: "",
       });
     }
-    if (tap === 2) {
+    if (path === 'shop') {
       this.setState({
         homeTap: "",
-        productTap: "active",
+        shopTap: "active",
+        searchTap: "",
         profileTap: "",
-        otherTap: "",
       });
     }
-    if (tap === 3) {
+    if (path === 'search') {
       this.setState({
         homeTap: "",
-        productTap: "",
+        shopTap: "",
+        searchTap: "active",
+        profileTap: "",
+      });
+    }
+    if (path === 'profile') {
+      this.setState({
+        homeTap: "",
+        shopTap: "",
+        searchTap: "",
         profileTap: "active",
-        otherTap: "",
-      });
-    }
-    if (tap === 4) {
-      this.setState({
-        homeTap: "",
-        productTap: "",
-        profileTap: "",
-        otherTap: "active",
       });
     }
   };
 
   render() {
-    const { homeTap, productTap, profileTap, otherTap } = this.state;
+    const { homeTap, shopTap, searchTap, profileTap } = this.state;
     return (
       <>
-        <div className="navbar taps">
+        <div className="navbar taps regular-th">
           <Link
             to="/"
             className={homeTap}
-            onClick={() => this.handleActiveTap(1)}
+            //onClick={() => this.handleActiveTap()}
           >
             {" "}
             <i className="fas fa-home" style={{ fontSize: "25px" }} />
-         
+            <br />
+            หน้าหลัก
           </Link>
 
           <Link
-            to="/"
-            className={productTap}
-            onClick={() => this.handleActiveTap(2)}
+            to="/shop"
+            className={shopTap}
+            //onClick={() => this.handleActiveTap(2)}
           >
             {" "}
             <i className="fas fa-th" style={{ fontSize: "25px" }} />
-           
+            <br />
+            ร้านค้า
           </Link>
 
           <Link
-            to="/"
+            to="/search"
             className={profileTap}
-            onClick={() => this.handleActiveTap(3)}
+            //onClick={() => this.handleActiveTap(4)}
+          >
+            {" "}
+            <i className="fas fa-search" style={{ fontSize: "25px" }} />
+            <br />
+            ค้นหา
+          </Link>
+
+          <Link
+            to="/profile"
+            className={searchTap}
+            //onClick={() => this.handleActiveTap(3)}
           >
             {" "}
             <i className="fas fa-user-alt" style={{ fontSize: "25px" }} />
-          </Link>
-
-          <Link
-            to="/"
-            className={otherTap}
-            onClick={() => this.handleActiveTap(4)}
-          >
-            {" "}
-            <i className="fas fa-align-justify" style={{ fontSize: "25px" }} />
+            <br />
+            ฉัน
           </Link>
         </div>
       </>
