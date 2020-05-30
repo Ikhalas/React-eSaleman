@@ -167,7 +167,7 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { product, showURL, isShare, ready } = this.state;
+    const { product, showURL, ready } = this.state;
     this._isMounted && this.genURL();
     return ready ? (
       <div className="regular-th">

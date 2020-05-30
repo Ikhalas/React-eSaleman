@@ -7,8 +7,7 @@ import {
   TabPane,
   Nav,
   NavItem,
-  NavLink,
-
+  NavLink
 } from "reactstrap";
 
 import ProductSelling from "./ProductSelling";
