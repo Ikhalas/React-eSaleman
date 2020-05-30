@@ -15,13 +15,13 @@ export default class Footer extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
-    this.handleActiveTap()
+    console.log(this.props);
+    this.handleActiveTap();
   }
 
   handleActiveTap = () => {
-    const {path} = this.props
-    if (path === 'home') {
+    const { path } = this.props;
+    if (path === "home") {
       this.setState({
         homeTap: "active",
         shopTap: "",
@@ -29,7 +29,7 @@ export default class Footer extends Component {
         profileTap: "",
       });
     }
-    if (path === 'shop') {
+    if (path === "shop") {
       this.setState({
         homeTap: "",
         shopTap: "active",
@@ -37,7 +37,7 @@ export default class Footer extends Component {
         profileTap: "",
       });
     }
-    if (path === 'search') {
+    if (path === "search") {
       this.setState({
         homeTap: "",
         shopTap: "",
@@ -45,7 +45,7 @@ export default class Footer extends Component {
         profileTap: "",
       });
     }
-    if (path === 'profile') {
+    if (path === "profile") {
       this.setState({
         homeTap: "",
         shopTap: "",
@@ -84,7 +84,8 @@ export default class Footer extends Component {
 
           <Link
             to="/search"
-            className={profileTap}
+            className={searchTap}
+
             //onClick={() => this.handleActiveTap(4)}
           >
             {" "}
@@ -95,7 +96,7 @@ export default class Footer extends Component {
 
           <Link
             to="/profile"
-            className={searchTap}
+            className={profileTap}
             //onClick={() => this.handleActiveTap(3)}
           >
             {" "}

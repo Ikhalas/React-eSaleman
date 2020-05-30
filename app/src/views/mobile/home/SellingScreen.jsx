@@ -103,14 +103,9 @@ export default class SellingScreen extends Component {
     return (
       productSelling &&
       productSelling.map((prod) => (
-        <Card
-          body
-          className="mb-2"
-          key={prod.id}
-          style={{ padding : 10}}
-        >
+        <Card body className="mb-2" key={prod.id} style={{ padding: 10 }}>
           <Row>
-            <Col xs="4" style={{ paddingLeft: 5, paddingRight: 5 }}>
+            <Col xs="4" style={{  paddingRight: 5 }}>
               <div
                 style={{
                   height: "100px",
@@ -121,7 +116,7 @@ export default class SellingScreen extends Component {
                 }}
               ></div>
             </Col>
-            <Col xs="8" style={{ paddingRight: 0 }}>
+            <Col xs="7" style={{ paddingRight: 0 }}>
               {" "}
               <CardText>
                 <p style={{ marginBottom: 0 }}>{prod.product_name}</p>
@@ -131,8 +126,11 @@ export default class SellingScreen extends Component {
                 >
                   {this.convertDate(prod.share_date)} : {prod.share_time} น.
                 </p>
-             
-                <span className="light-th" style={{ fontSize: "10px", marginTop: 0 }}>
+
+                <span
+                  className="light-th"
+                  style={{ fontSize: "10px", marginTop: 0 }}
+                >
                   แชร์อีกครั้ง
                 </span>
                 <br />
@@ -183,26 +181,23 @@ export default class SellingScreen extends Component {
     return ready ? (
       <div>
         <NotificationAlert ref="notify" />
-        <Row>
-          <Col xs="12">
-            {productSelling.length ? (
-              <>
-                {this.genProductCard()}
-                <br />
-              </>
-            ) : (
-              <>
-                <div
-                  className="light-th text-danger"
-                  style={{ textAlign: "center", fontSize: "20px" }}
-                >
-                  <br /> <br />
-                  ยังไม่มีรายการ
-                </div>
-              </>
-            )}
-          </Col>
-        </Row>
+
+        {productSelling.length ? (
+          <>
+            {this.genProductCard()}
+            <br />
+          </>
+        ) : (
+          <>
+            <div
+              className="light-th text-danger"
+              style={{ textAlign: "center", fontSize: "20px" }}
+            >
+              <br /> <br />
+              ยังไม่มีรายการ
+            </div>
+          </>
+        )}
       </div>
     ) : null;
   }

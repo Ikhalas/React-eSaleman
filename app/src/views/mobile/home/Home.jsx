@@ -48,7 +48,7 @@ export default class Home extends Component {
 
         <div
           className="regular-th"
-          style={{ marginTop: "60px" }}
+          style={{ marginTop: "60px"}}
         >
           <div style={{ backgroundColor: "#ffffff" }}>
             <Nav tabs>

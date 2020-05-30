@@ -148,10 +148,11 @@ class Shop extends Component {
     return (
       <>
         <Header />
-        <div className="regular-th" style={{ marginTop: "60px" }}>
-          <Row>
+       
+        <div className="regular-th" style={{ marginTop: "55px" }}>
+          <Row style={{paddingTop : 0}}>
             <Col xs="4" className="side-nav">
-              <h5 className="mt-1 ml-2">ร้านค้า</h5>
+              <h5 className="mt-2 ml-2">ร้านค้า</h5>
               <ListGroup>{this.genShopList()}</ListGroup>
             </Col>
             <Col xs="8" className="content-wrapper">
