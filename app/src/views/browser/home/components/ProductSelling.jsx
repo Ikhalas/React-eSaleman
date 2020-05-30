@@ -1,7 +1,27 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { Card, CardTitle, CardText, Row, Col } from "reactstrap";
+import { Card, CardTitle, CardText, Row, Col, Input, Button } from "reactstrap";
+import { FacebookShareButton, LineShareButton } from "react-share";
+import NotificationAlert from "react-notification-alert";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
+import { ReactComponent as LineSVG } from "../../../../assets/icon/line.svg";
+import { ReactComponent as FacebookSVG } from "../../../../assets/icon/facebook.svg";
+//import { ReactComponent as MessengerSVG } from "../../assets/icon/messenger.svg";
+
+import "../../../../assets/css/facebook.css";
+import "../../../../assets/css/line.css";
+
+var copiedAlert = {
+  place: "br",
+  message: (
+    <div style={{ fontSize: "18px", color: "gray" }}>copied to clipboard</div>
+  ),
+  type: "success",
+  //icon : "fas fa-check",
+  autoDismiss: 2,
+};
 
 class Product_Selling extends Component {
   constructor(props) {
@@ -51,23 +71,12 @@ class Product_Selling extends Component {
     return (
       productSelling &&
       productSelling.map((prod) => (
-        <Card
-          body
-          className="mt-2"
-          key={prod.id}
-          style={{ cursor: "pointer" }}
-          onClick={() => {
-            this.props.history.push(
-              `/productdetail/${prod.product_shop}/${prod.product_shopID}/${prod.product_id}`
-      
-            );
-          }}
-        >
+        <Card body className="mt-2" key={prod.id} style={{ cursor: "pointer" }}>
           <Row>
             <Col md="3">
               <div
                 style={{
-                  height: "200px",
+                  height: "180px",
                   backgroundColor: "#d9d9d9",
                   backgroundImage: "url(" + prod.product_thumbnail + ")",
                   backgroundSize: "100%",
@@ -84,23 +93,50 @@ class Product_Selling extends Component {
                 <span className="light-th" style={{ fontSize: "13px" }}>
                   {this.convertDate(prod.share_date)} : {prod.share_time} น.
                 </span>
-                <br />
-                <br />
-                <span className="light-th" style={{ fontSize: "15px" }}>
-                  รายละเอียด :
-                </span>
-                <span> {prod.product_detail}</span>
-
-                <br />
-                <br />
-
-                <span className="light-th" style={{ fontSize: "15px" }}>
-                  สถานะ :
-                </span>
-                <span className="text-danger" style={{ fontSize: "20px" }}>
-                  {" "}
-                  กำลังขาย
-                </span>
+                <hr />
+                <p className="light-th" style={{ fontSize: "15px" }}>
+                  แชร์อีกครั้ง
+                </p>
+                <Row>
+                  <Col md="1">
+                    {" "}
+                    <FacebookShareButton url={prod.share_url}>
+                      <div
+                        id="fb-share-button"
+                        className="text-center"
+                        style={{ width: "40px" }}
+                      >
+                        <FacebookSVG />
+                      </div>
+                    </FacebookShareButton>
+                  </Col>
+                  <Col md="1">
+                    {" "}
+                    <LineShareButton url={prod.share_url}>
+                      <div id="ln-share-button" className="text-center">
+                        <LineSVG />
+                      </div>
+                    </LineShareButton>
+                  </Col>
+                  <Col md="9" style={{ paddingRight: 1 }}>
+                    {" "}
+                    <Input className="light-th" defaultValue={prod.share_url} />
+                  </Col>
+                  <Col md="1" className="text-right" style={{ paddingLeft: 2 }}>
+                    <CopyToClipboard
+                      onCopy={() => {
+                        this.setState({ copied: true });
+                        this.refs.notify.notificationAlert(copiedAlert);
+                      }}
+                      text={prod.share_url}
+                    >
+                      <Button color="danger" block>
+                        <i className="far fa-copy"></i>
+                      </Button>
+                    </CopyToClipboard>
+                  </Col>
+                </Row>
+                &nbsp;&nbsp;
               </CardText>
             </Col>
           </Row>
@@ -145,6 +181,7 @@ class Product_Selling extends Component {
     const { ready, productSelling } = this.state;
     return ready ? (
       <div>
+        <NotificationAlert ref="notify" />
         <Row>
           <Col md="12">
             {productSelling.length ? (

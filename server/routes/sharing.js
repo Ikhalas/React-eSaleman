@@ -68,6 +68,7 @@ sharing_router.post("/new_share", (req, res) => {
     share_id: req.body.share_id,
     share_date: req.body.share_date,
     share_time: req.body.share_time,
+    share_url: req.body.share_url,
     share_status: req.body.share_status,
     product_id: req.body.product_id,
     product_name: req.body.product_name,
@@ -90,7 +91,7 @@ sharing_router.post("/new_share", (req, res) => {
       return;
     }
     res.status(201); //Created
-    res.send('Created'); //Created
+    res.send("Created"); //Created
   });
 });
 
