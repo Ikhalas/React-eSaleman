@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
+import { auth } from "../../assets/api/firebase";
 
 import "../../assets/css/taps.css";
 
@@ -11,12 +13,73 @@ export default class Footer extends Component {
       shopTap: "",
       searchTap: "",
       profileTap: "",
+      currentUser: null,
+      userDetail: "",
     };
+    this._isMounted = false;
   }
 
   componentDidMount() {
-    console.log(this.props);
-    this.handleActiveTap();
+    this._isMounted = true;
+    this._isMounted && this.getUser();
+    this._isMounted && this.handleActiveTap();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  getUser() {
+    auth.onAuthStateChanged((user) => {
+      user
+        ? this._isMounted &&
+          this.setState({ currentUser: user }, () => {
+            //console.log(this.state.currentUser.uid)
+            this.getUserDetail();
+          })
+        : this._isMounted && this.setState({ currentUser: null });
+    });
+  }
+
+  getUserDetail() {
+    const { currentUser } = this.state;
+    axios
+      .get(process.env.REACT_APP_API_URL + "/user/" + currentUser.uid)
+      .then((res) => {
+        this._isMounted &&
+          this.setState(
+            {
+              userDetail: res.data,
+            },
+            () => this.isFirstTimeLogin()
+          );
+      })
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/errconnection");
+      });
+  }
+
+  isFirstTimeLogin() {
+    const { currentUser, userDetail } = this.state;
+
+    if (currentUser.providerData[0].providerId !== "password" && !userDetail) {
+      //console.log("log in with " + currentUser.providerData[0].providerId + " and this is my first time");
+      axios
+        .post(process.env.REACT_APP_API_URL + "/user/add_new_user", {
+          user_id: currentUser.uid,
+          user_email: currentUser.email,
+          user_name: currentUser.displayName,
+          user_photo: currentUser.photoURL,
+        })
+        .then((res) => {
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      //console.log("end");
+    }
   }
 
   handleActiveTap = () => {
