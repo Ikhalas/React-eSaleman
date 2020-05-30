@@ -47,8 +47,9 @@ export default class Register extends Component {
               .then(function (response) {
                 //console.log(response);
               })
-              .catch(function (error) {
-                console.log(error);
+              .catch((err) => {
+                console.log(err);
+                this.props.history.push("/errconnection");
               });
           });
         });

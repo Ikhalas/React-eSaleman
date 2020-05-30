@@ -49,7 +49,7 @@ class Shop extends Component {
       })
       .catch((err) => {
         console.log(err);
-        //this.props.history.push("/errconnection");
+        this.props.history.push("/errconnection");
       });
   }
 
@@ -61,7 +61,7 @@ class Shop extends Component {
       })
       .catch((err) => {
         console.log(err);
-        //this.props.history.push("/errconnection");
+        this.props.history.push("/errconnection");
       });
   }
 

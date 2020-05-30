@@ -54,7 +54,7 @@ export default class Profile extends Component {
       })
       .catch((err) => {
         console.log(err);
-        //this.props.history.push("/errconnection");
+        this.props.history.push("/errconnection");
       });
   }
 
@@ -75,7 +75,7 @@ export default class Profile extends Component {
       })
       .catch((err) => {
         console.log(err);
-        //this.props.history.push("/errconnection");
+        this.props.history.push("/errconnection");
       });
   }
 
@@ -91,6 +91,10 @@ export default class Profile extends Component {
           this.setState({
             productSold: res.data,
           });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/errconnection");
       });
   }
 
@@ -159,9 +163,15 @@ export default class Profile extends Component {
               </div>
             </div>
           </div>
-          <br/><br/><br/><br/><br/>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
           <div className="px-3">
-            <Button onClick={() => auth.signOut()} color="danger" block>ออกจากระบบ</Button>
+            <Button onClick={() => auth.signOut()} color="danger" block>
+              ออกจากระบบ
+            </Button>
           </div>
         </div>
         <Taps path="profile" />

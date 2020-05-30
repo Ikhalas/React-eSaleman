@@ -31,7 +31,10 @@ class Product extends Component {
     axios
       .get(process.env.REACT_APP_API_URL + "/shop")
       .then((res) => {
-        this._isMounted && this.setState({ shopOptions: res.data }, ()=> this.setState({selectedShop : this.state.shopOptions[0]}));
+        this._isMounted &&
+          this.setState({ shopOptions: res.data }, () =>
+            this.setState({ selectedShop: this.state.shopOptions[0] })
+          );
       })
       .catch((err) => {
         console.log(err);
@@ -64,7 +67,7 @@ class Product extends Component {
                 options={shopOptions}
               />
             </Container>
-            
+
             {selectedShop && <ProductList shop={selectedShop} />}
           </div>
         </div>
@@ -73,4 +76,4 @@ class Product extends Component {
   }
 }
 
-export default withRouter(Product)
+export default withRouter(Product);

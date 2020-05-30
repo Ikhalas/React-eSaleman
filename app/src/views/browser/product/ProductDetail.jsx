@@ -78,7 +78,6 @@ class ProductDetail extends Component {
   }
 
   getProduct() {
-    //console.log(`${process.env.REACT_APP_API_URL}/product/${this._shopName}/${this._productId}`)
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/product/getbyid/${this._shopId}/${this._productId}`
@@ -156,7 +155,8 @@ class ProductDetail extends Component {
         this.setState({ reRender: true });
       })
       .catch((err) => {
-        console.error(err);
+        console.log(err);
+        this.props.history.push("/errconnection");
       });
   }
 

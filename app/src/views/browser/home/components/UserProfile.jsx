@@ -71,6 +71,10 @@ class UserProfile extends Component {
           this.setState({
             productSold: res.data,
           });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/errconnection");
       });
   }
 

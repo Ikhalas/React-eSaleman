@@ -73,7 +73,6 @@ class ProductDetail extends Component {
   }
 
   getProduct() {
-    //console.log(`${process.env.REACT_APP_API_URL}/product/${this._shopName}/${this._productId}`)
     axios
       .get(
         `${process.env.REACT_APP_API_URL}/product/getbyid/${this._shopId}/${this._productId}`
@@ -152,6 +151,10 @@ class ProductDetail extends Component {
       })
       .catch((err) => {
         console.error(err);
+      })
+      .catch((err) => {
+        console.log(err);
+        this.props.history.push("/errconnection");
       });
   }
 
@@ -231,7 +234,7 @@ class ProductDetail extends Component {
         />
 
         <div className="mx-3 mt-3">
-          <Row style={{paddingBottom : 10}}>
+          <Row style={{ paddingBottom: 10 }}>
             <Col xs="6" style={{ textAlign: "start" }}>
               {" "}
               <FacebookShareButton url={this._productURL}>
@@ -262,51 +265,40 @@ class ProductDetail extends Component {
             </Col>
           </Row>
 
-        
-              <div>
-              
-                {showURL ? (
-                  <>
-                    <Row>
-                      <Col xs="10" style={{ paddingRight: 2 }}>
-                        <Input
-                          className="light-th"
-                          defaultValue={this._productURL}
-                        />
-                      </Col>
-                      <Col
-                        xs="2"
-                        style={{ paddingLeft: 2 }}
-                      >
-                        <CopyToClipboard
-                          onCopy={() => {
-                            this.setState({ copied: true });
-                            this.refs.notify.notificationAlert(copiedAlert);
-                          }}
-                          text={this._productURL}
-                        >
-                          <Button color="danger" block>
-                            <i className="far fa-copy"></i>
-                          </Button>
-                        </CopyToClipboard>
-                      </Col>
-                    </Row>
-                  </>
-                ) : (
-                  <>
-                    {" "}
-                    <Button
-                      color="danger"
-                      
-                      block
-                      onClick={() => this._shareURL()}
+          <div>
+            {showURL ? (
+              <>
+                <Row>
+                  <Col xs="10" style={{ paddingRight: 2 }}>
+                    <Input
+                      className="light-th"
+                      defaultValue={this._productURL}
+                    />
+                  </Col>
+                  <Col xs="2" style={{ paddingLeft: 2 }}>
+                    <CopyToClipboard
+                      onCopy={() => {
+                        this.setState({ copied: true });
+                        this.refs.notify.notificationAlert(copiedAlert);
+                      }}
+                      text={this._productURL}
                     >
-                      ขอลิงค์สำหรับแชร์
-                    </Button>
-                  </>
-                )}
-              </div>
-          
+                      <Button color="danger" block>
+                        <i className="far fa-copy"></i>
+                      </Button>
+                    </CopyToClipboard>
+                  </Col>
+                </Row>
+              </>
+            ) : (
+              <>
+                {" "}
+                <Button color="danger" block onClick={() => this._shareURL()}>
+                  ขอลิงค์สำหรับแชร์
+                </Button>
+              </>
+            )}
+          </div>
         </div>
         <br />
       </div>
