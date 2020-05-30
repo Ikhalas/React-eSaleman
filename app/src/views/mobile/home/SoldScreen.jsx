@@ -1,27 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { withRouter } from "react-router-dom";
-import { Card, CardTitle, CardText, Row, Col, Input, Button } from "reactstrap";
-import { FacebookShareButton, LineShareButton } from "react-share";
+import { Card, CardText, Row, Col } from "reactstrap";
 import NotificationAlert from "react-notification-alert";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-
-import { ReactComponent as LineSVG } from "../../../assets/icon/line.svg";
-import { ReactComponent as FacebookSVG } from "../../../assets/icon/facebook.svg";
-//import { ReactComponent as MessengerSVG } from "../../assets/icon/messenger.svg";
-
-import "../../../assets/css/facebook.css";
-import "../../../assets/css/line.css";
-
-var copiedAlert = {
-  place: "br",
-  message: (
-    <div style={{ fontSize: "18px", color: "gray" }}>copied to clipboard</div>
-  ),
-  type: "success",
-  //icon : "fas fa-check",
-  autoDismiss: 2,
-};
 
 export default class SellingScreen extends Component {
   constructor(props) {
@@ -103,12 +83,7 @@ export default class SellingScreen extends Component {
     return (
       productSelling &&
       productSelling.map((prod) => (
-        <Card
-          body
-          className="mb-2"
-          key={prod.id}
-          style={{ padding : 10}}
-        >
+        <Card body className="mb-2" key={prod.id} style={{ padding: 10 }}>
           <Row>
             <Col xs="4" style={{ paddingLeft: 5, paddingRight: 5 }}>
               <div
@@ -130,7 +105,7 @@ export default class SellingScreen extends Component {
                   style={{ fontSize: "10px", marginTop: 0 }}
                 >
                   {this.convertDate(prod.share_date)} : {prod.share_time} น.
-                </p>      
+                </p>
               </CardText>
             </Col>
           </Row>

@@ -6,8 +6,8 @@ import Shop from "../views/mobile/shop/Shop";
 import ProductDetail from "../views/mobile/shop/ProductDetail"
 import Search from "../views/mobile/search/Search";
 import Profile from "../views/mobile/profile/Profile";
-import BadConnection from "../views/browser/error/BadConnection"
-import NotFound from '../views/browser/error/NotFound'
+import BadConnection from "../views/mobile/error/BadConnection"
+import NotFound from '../views/mobile/error/NotFound'
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../assets/css/app.css";

@@ -4,8 +4,8 @@ import { auth } from "./assets/api/firebase";
 
 import MainBrowser from "./layouts/MainBrowser";
 import MainMobile from "./layouts/MainMobile"
-import B_LoginContainer from "./views/browser/register-login/LoginContainer";
-import M_LoginContainer from "./views/mobile/register-login/LoginContainer";
+import BrowserLoginContainer from "./views/browser/register-login/LoginContainer";
+import MobileLoginContainer from "./views/mobile/register-login/LoginContainer";
 
 export default class App extends Component {
   constructor(props) {
@@ -41,7 +41,7 @@ export default class App extends Component {
         {currentUser ? (
           <>{isMobile ? <MainMobile /> : <MainBrowser />}</>
         ) : (
-        <>{isMobile ? <M_LoginContainer /> : <B_LoginContainer />}</>
+        <>{isMobile ? <MobileLoginContainer /> : <BrowserLoginContainer />}</>
           
         )}
       </div>

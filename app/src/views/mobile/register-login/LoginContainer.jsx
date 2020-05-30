@@ -26,7 +26,7 @@ export default class LoginContainer extends Component {
         <Header />
         <div style={{ marginTop: "60px" }}>
           <div className="pt-5" style={{ textAlign: "center" }}>
-            <img width="100%" src={require("../../../assets/images/logo_2.png")} />
+            <img width="100%" src={require("../../../assets/images/logo_2.png")} alt="logo" />
           </div>
         </div>{" "}
         <br /><br /><br />

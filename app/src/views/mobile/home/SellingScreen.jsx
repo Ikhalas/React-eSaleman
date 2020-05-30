@@ -1,17 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { withRouter } from "react-router-dom";
-import { Card, CardTitle, CardText, Row, Col, Input, Button } from "reactstrap";
+import { Card, CardText, Row, Col, Button } from "reactstrap";
 import { FacebookShareButton, LineShareButton } from "react-share";
 import NotificationAlert from "react-notification-alert";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-
-import { ReactComponent as LineSVG } from "../../../assets/icon/line.svg";
-import { ReactComponent as FacebookSVG } from "../../../assets/icon/facebook.svg";
-//import { ReactComponent as MessengerSVG } from "../../assets/icon/messenger.svg";
-
-import "../../../assets/css/facebook.css";
-import "../../../assets/css/line.css";
 
 var copiedAlert = {
   place: "br",

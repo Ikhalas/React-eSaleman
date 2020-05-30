@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {
   Container,
-  Nav,
   NavbarText,
   InputGroup,
   Input,
