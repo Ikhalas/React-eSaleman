@@ -21,7 +21,7 @@ prod_router.get("/getbyid/:shopid/:id", (req, res) => {
 //Get a products by product_shop
 prod_router.get("/shop/:id", (req, res) => {
   let sql = `SELECT * FROM mock_product WHERE product_shopID = ${req.params.id}`;
-  console.log(sql)
+  //console.log(sql)
 
   mysqlConnection.query(sql, (err, rows, fields) => {
     if (err) {

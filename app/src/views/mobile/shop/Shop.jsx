@@ -42,10 +42,7 @@ class Shop extends Component {
     axios
       .get(process.env.REACT_APP_API_URL + "/shop")
       .then((res) => {
-        this._isMounted &&
-          this.setState({ shopOptions: res.data }, () =>
-            console.log(this.state.shopOptions)
-          );
+        this._isMounted && this.setState({ shopOptions: res.data });
       })
       .catch((err) => {
         console.log(err);
@@ -148,9 +145,9 @@ class Shop extends Component {
     return (
       <>
         <Header />
-       
+
         <div className="regular-th" style={{ marginTop: "55px" }}>
-          <Row style={{paddingTop : 0}}>
+          <Row style={{ paddingTop: 0 }}>
             <Col xs="4" className="side-nav">
               <h5 className="mt-2 ml-2">ร้านค้า</h5>
               <ListGroup>{this.genShopList()}</ListGroup>

@@ -76,8 +76,8 @@ class Product_Selling extends Component {
             <Col md="3">
               <div
                 style={{
-                  height: "180px",
-                  backgroundColor: "#d9d9d9",
+                  height: "210px",
+                  backgroundColor: "#fff",
                   backgroundImage: "url(" + prod.product_thumbnail + ")",
                   backgroundSize: "100%",
                   backgroundRepeat: "no-repeat",

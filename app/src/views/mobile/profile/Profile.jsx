@@ -163,12 +163,8 @@ export default class Profile extends Component {
               </div>
             </div>
           </div>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <div className="px-3">
+       
+          <div className="px-3 my-5">
             <Button onClick={() => auth.signOut()} color="danger" block>
               ออกจากระบบ
             </Button>
